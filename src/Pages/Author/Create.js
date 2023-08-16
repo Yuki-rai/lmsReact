@@ -11,11 +11,13 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
 import { ApiUrl } from '../../ApiUrl';
-
+import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 
 export default function CreateAuthor() {
     const today = dayjs();
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         id: 0,
         name: '',
@@ -38,6 +40,15 @@ export default function CreateAuthor() {
                 },
                 body: JSON.stringify(formData),
             });
+            console.log(response);
+            navigate("/Author")
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Your work has been saved',
+                showConfirmButton: false,
+                timer: 1500
+            })
         }
         catch (error) {
             alert(error);

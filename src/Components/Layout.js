@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import Sidebar from './Sidebar';
 
 export default function Layout({ children }) {
+  
     return (
         <Box sx={{ display: 'flex' }}>
             <CssBaseline />

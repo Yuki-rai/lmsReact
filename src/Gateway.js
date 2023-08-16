@@ -8,6 +8,7 @@ import Issue from "./Pages/Issue/Issue";
 import CreateStudent from "./Pages/Student/Create";
 import CreateIssue from "./Pages/Issue/Create";
 import Login from "./Pages/Login";
+import CreateBook from "./Pages/Book/Create";
 
 export default function Gateway() {
     return (
@@ -18,8 +19,9 @@ export default function Gateway() {
             <Route exact path="/Student/Create" element={<CreateStudent />} />
             <Route exact path="/Student" element={<Student />} />
             <Route exact path="/Book" element={<Book />} />
+            <Route exact path="/Book/Create" element={<CreateBook />} />
             <Route exact path="/Issue" element={<Issue />} />
-            <Route exact path="/Issue/Create" element={<CreateIssue />} />
+            {/* <Route exact path="/Issue/Create" element={<CreateIssue />} /> */}
             <Route exact path="Login" element={<Login />} />
             <Route exact path="/*" element={<div> Nothing </div>} />
         </Routes>

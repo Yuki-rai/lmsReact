@@ -9,7 +9,7 @@ import List from '@mui/material/List';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { AiOutlineSetting,AiOutlineUserAdd } from 'react-icons/ai'
+import { AiOutlineSetting, AiOutlineUserAdd } from 'react-icons/ai'
 import { FaHome, FaWrench } from 'react-icons/fa'
 import { PiStudentFill } from 'react-icons/pi'
 import { GiBookCover } from 'react-icons/gi'
@@ -18,9 +18,8 @@ import { FiLogOut } from 'react-icons/fi'
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { Collapse } from '@mui/material';
-import styled from '@emotion/styled';
 const drawerWidth = 240;
-function Sidebar() {
+function Sidebar(props) {
     const [open, setOpen] = useState(false);
     const handleListItem = () => {
         setOpen(!open);
@@ -33,6 +32,12 @@ function Sidebar() {
                     <Typography variant="h6" noWrap component="div">
                         LMS
                     </Typography>
+                    <List>
+                        <ListItem>
+                            <Link onClick={props.login}> Login
+                            </Link>
+                        </ListItem>
+                    </List>
                 </Toolbar>
             </AppBar>
             <Drawer

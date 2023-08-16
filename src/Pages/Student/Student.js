@@ -13,10 +13,10 @@ import { FaTrash } from 'react-icons/fa'
 import { BsPencilSquare } from 'react-icons/bs'
 import { Link } from 'react-router-dom';
 
-export default function Author() {
+export default function Student() {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
-    const [author, setAuthor] = useState([])
+    const [student, setStudent] = useState([])
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
@@ -26,19 +26,19 @@ export default function Author() {
         setPage(0);
     };
 
-    const GetAllAuthor = () => {
-        fetch(ApiUrl.API_URL + 'Admin/Author/GetAllAuthor')
+    const GetAllStudent = () => {
+        fetch(ApiUrl.API_URL + 'Admin/Student/GetAllStudent')
             .then(response => response.json())
             .then(response => {
                 const test = [];
                 response.data.map((item) => {
                     test.push(item);
                 })
-                setAuthor(test);
+                setStudent(test);
             })
     }
     useEffect(() => {
-        GetAllAuthor();
+        GetAllStudent();
     }, [true])
 
     return (<>
@@ -71,14 +71,14 @@ export default function Author() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {author.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item) => {
+                        {student.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item) => {
                             return (
                                 <TableRow hover key={item.id}>
                                     <TableCell>
                                         {(item?.id)}
                                     </TableCell>
                                     <TableCell>
-                                        {item?.name}
+                                        {item?.firstName } {item?.lastName}
                                     </TableCell>
                                     <TableCell>
                                         {(item?.birthDate).slice(0, 10)}
@@ -103,7 +103,7 @@ export default function Author() {
             <TablePagination
                 rowsPerPageOptions={[10, 25, 100]}
                 component="div"
-                count={author.length}
+                count={student.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onPageChange={handleChangePage}

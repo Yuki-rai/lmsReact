@@ -5,19 +5,15 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import { Button, FormControl, FormGroup, InputLabel, MenuItem, Select, Stack, TextField } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { SInputField, SPanelBody } from '../../Components/Styles';
+import { SInputField } from '../../Components/Styles';
 import { IoIosArrowRoundBack } from 'react-icons/io'
-import { Form, Link } from 'react-router-dom';
+import { Link, useNavigate  } from 'react-router-dom';
 import { useState } from 'react';
-import axios from 'axios';
 import { ApiUrl } from '../../ApiUrl';
-import SelectInput from '@mui/material/Select/SelectInput';
-import { useForm } from "react-hook-form";
 
 
 export default function CreateStudent() {
-    const { register, handleSubmit,  formState: { errors } } = useForm();
-
+    const navigate = useNavigate();
     const today = dayjs();
     const [formData, setFormData] = useState({
         id: 0,
@@ -33,71 +29,69 @@ export default function CreateStudent() {
             [test]: e,
         }));
     };
-   
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await fetch(ApiUrl.API_URL + 'Admin/Student/CreateStudent', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+            navigate('/Student');
+        }
+        catch (error) {
+            alert(error);
+        }
 
-    const gender = 'Female';
+    }
     return (
         <>
             <CssBaseline />
             <Container maxWidth="xl">
                 <h2>Add Student</h2>
-                <SPanelBody >
+                <Box sx={{ bgcolor: 'white', padding: '10px', marginTop: '15px', borderRadius: '20px' }}>
                     <Box component="form" sx={{ padding: `10px` }} onSubmit={handleSubmit} >
-                        <h3>Student Details</h3>
                         <FormGroup sx={{ display: `flex`, flexDirection: `row` }}>
                             <SInputField>
-                                <FormControl>
-                                    <TextField
-                                        required
-
-                                        label="First Name"
-                                        onChange={(e) => handleInputChange(e.target.value, "firstName")}
-                                    />
-                                </FormControl>
+                                <TextField
+                                    required
+                                    label="First Name"
+                                    onChange={(abc) => handleInputChange(abc.target.value, "firstName")}
+                                />
                             </SInputField>
-
                             <SInputField>
-                                <FormControl>
-                                    <TextField
-                                        label="Last Name"
-                                        onChange={(e) => handleInputChange(e.target.value, "lastName")}
-                                    />
-                                </FormControl>
+                                <TextField
+                                    required
+                                    label="Last Name"
+                                    onChange={(abc) => handleInputChange(abc.target.value, "lastName")}
+                                />
                             </SInputField>
-
                             <SInputField>
-                                <FormControl fullWidth >
-                                    <InputLabel id="demo-simple-select-label">Gender</InputLabel>
-                                    <Select
-
-                                        labelId="demo-simple-select-label"
-                                        id="demo-simple-select"
-                                        label="Gender"
-                                        value={formData.genderId}
-                                        onChange={(e) => handleInputChange(e.target.value, "genderId")}
-                                    >
-                                        <MenuItem value={1}>Male</MenuItem>
-                                        <MenuItem value={2}>Female</MenuItem>
-                                    </Select>
-                                </FormControl>
+                                <DatePicker
+                                    label='Birth Date'
+                                    disableFuture
+                                    format='YYYY-MM-DD'
+                                    defaultValue={today} type="date"
+                                    onChange={(data) => handleInputChange(data.toISOString().slice(0, 10), "birthDate")}
+                                />
                             </SInputField>
-
-
                             <SInputField>
-                                <FormControl>
-                                    <DatePicker
-                                        label='Birth Date'
-
-                                        disableFuture
-                                        format='YYYY-MM-DD'
-                                        defaultValue={today} type="date"
-                                        onChange={(data) => handleInputChange(data.toISOString().slice(0, 10), "birthDate")}
-                                    />
-                                </FormControl>                                
-                            </SInputField>
-
-
-
+                                 <FormControl fullWidth >
+                                     <InputLabel id="demo-simple-select-label">Gender</InputLabel>
+                                     <Select
+                                         labelId="demo-simple-select-label"
+                                         id="demo-simple-select"
+                                         label="Gender"
+                                         value={formData.genderId}
+                                         onChange={(e) => handleInputChange(e.target.value, "genderId")}
+                                     >
+                                         <MenuItem value={1}>Male</MenuItem>
+                                         <MenuItem value={2}>Female</MenuItem>
+                                     </Select>
+                                 </FormControl>
+                             </SInputField>
                         </FormGroup>
 
                         <Stack direction="row" spacing={2} sx={{ margin: `20px 20px 20px 5px` }}>
@@ -111,7 +105,7 @@ export default function CreateStudent() {
                             </Button>
                         </Stack>
                     </Box>
-                </SPanelBody>
+                </Box>
             </Container>
         </>
     );

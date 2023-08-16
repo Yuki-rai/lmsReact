@@ -16,7 +16,7 @@ import { Link } from 'react-router-dom';
 export default function Author() {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
-    const [author, setAuthor] = useState([])
+    const [book, setBook] = useState([])
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
@@ -26,25 +26,25 @@ export default function Author() {
         setPage(0);
     };
 
-    const GetAllAuthor = () => {
-        fetch(ApiUrl.API_URL + 'Admin/Author/GetAllAuthor')
+    const GetAllBook = () => {
+        fetch(ApiUrl.API_URL + 'Admin/Book/GetAllBook')
             .then(response => response.json())
             .then(response => {
                 const test = [];
                 response.data.map((item) => {
                     test.push(item);
                 })
-                setAuthor(test);
+                setBook(test);
             })
     }
     useEffect(() => {
-        GetAllAuthor();
+        GetAllBook();
     }, [true])
 
     return (<>
         <Toolbar>
-            <h1>Author</h1>
-            <Link to={"/Author/Create"}>
+            <h1>Book</h1>
+            <Link to={"/Book/Create"}>
                 <Button variant="contained" color="success">
                     Create
                 </Button>
@@ -63,7 +63,7 @@ export default function Author() {
                                 Name
                             </TableCell>
                             <TableCell>
-                                BirthDate
+                                Category
                             </TableCell>
                             <TableCell>
                                 Action
@@ -71,7 +71,7 @@ export default function Author() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {author.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item) => {
+                        {book.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item) => {
                             return (
                                 <TableRow hover key={item.id}>
                                     <TableCell>
@@ -81,7 +81,7 @@ export default function Author() {
                                         {item?.name}
                                     </TableCell>
                                     <TableCell>
-                                        {(item?.birthDate).slice(0, 10)}
+                                        {(item?.categoryName)}
                                     </TableCell>
                                     <TableCell>
                                         <Button sx={{ margin: "4px" }} variant="contained" startIcon={<BsPencilSquare />}>
@@ -103,7 +103,7 @@ export default function Author() {
             <TablePagination
                 rowsPerPageOptions={[10, 25, 100]}
                 component="div"
-                count={author.length}
+                count={book.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onPageChange={handleChangePage}
