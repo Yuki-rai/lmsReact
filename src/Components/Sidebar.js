@@ -122,9 +122,9 @@ function Sidebar(props) {
 const mainArray = [
 
     {
-        label: "Author",
+        label: "Faculty",
         icon: <AiOutlineUserAdd />,
-        to: "/Author",
+        to: "/Faculty",
     },
     {
         label: "Student",
