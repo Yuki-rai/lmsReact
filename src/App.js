@@ -1,22 +1,20 @@
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import Layout from "./Components/Layout";
 import Gateway from "./Gateway";
-import { Provider } from "react-redux";
-import { store } from "./redux/store";
 import { ToastContainer } from "react-toastify";
+import { CssBaseline } from "@mui/material";
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
-  return (
-    <Provider store={store}>
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <Layout>
-          <Gateway />
-        </Layout>
-      </LocalizationProvider>
-      <ToastContainer />
 
-    </Provider>
+  return (
+    <>
+      <CssBaseline />
+      <ToastContainer />
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <Gateway />
+      </LocalizationProvider>
+    </>
   );
 }
 

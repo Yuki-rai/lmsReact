@@ -1,7 +1,7 @@
 import { facultyApi } from "../../apiHelpers";
 import apiUrls from "../../apiUrls";
 
-export const faculty = async ()=>{
+export const facultyService = async ()=>{
     let response = await facultyApi(
         apiUrls.faculty.faculty.method,
         apiUrls.faculty.faculty.url
@@ -9,10 +9,10 @@ export const faculty = async ()=>{
     return response;
 };
 
-export const CreateFaculty = async (data)=>{
+export const createFacultyService = async (data)=>{
     let response = await facultyApi(
-        apiUrls.method.CreateFaculty.method,
-        apiUrls.faculty.CreateFaculty.url,
+        apiUrls.faculty.createFaculty.method,
+        apiUrls.faculty.createFaculty.url,
         data
     );
     return response;

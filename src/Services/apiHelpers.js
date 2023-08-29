@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import {store} from '../redux/store'
 const baseUrl = "https://localhost:7098/api";
 
 export const urls={
@@ -17,14 +17,28 @@ export const authApi = async (method,url,data)=>{
 }
 
 export const facultyApi = async (method,url,data)=>{
-    const token = localStorage.getItem("accessToken");
+    const token = store.getState();
     let response = await axios({
         method,
         url:`${urls.facultyUrl}${url}`,
         data,
-        // headers:{
-        //     Authorization:`Bearer ${token}`,
-        // },
+        headers:{
+            Authorization:`Bearer ${token.userDetail.user?.data?.token}`,
+        },
+    });
+    return response.data;
+}
+
+
+export const categoryApi = async (method,url,data)=>{
+    const token = store.getState();
+    let response = await axios({
+        method,
+        url:`${urls.categoryUrl}${url}`,
+        data,
+        headers:{
+            Authorization:`Bearer ${token.userDetail.user?.data?.token}`,
+        },
     });
     return response.data;
 }

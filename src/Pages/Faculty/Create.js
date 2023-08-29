@@ -3,15 +3,37 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import { Button, FormControl, FormGroup, Stack, TextField } from '@mui/material';
-import { SInputField } from '../../Components/Styles';
+import { SInputField } from '../../Components/styles/Styles';
 import { IoIosArrowRoundBack } from 'react-icons/io'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { createFacultyService } from '../../Services/apiServices/faculty/facultyServices';
+import { toast } from 'react-toastify';
 
 
 export default function CreateFaculty() {
-    const { register, handleSubmit, formState } = useForm();
-    const onSubmit = (data)=>{
+    const { register, handleSubmit, formState:{errors,isSubmitting} } = useForm();
+    const navigate = useNavigate();
+    const onSubmit = async (data)=>{
+        try{
+            debugger;
+            if(isSubmitting) return;
+            const response = await createFacultyService(data);
+            if(response.status=== true){
+                toast.success(response.message,{
+                    autoclose:1000,
+                })
+                navigate("/Faculty")
+            } else if(response.status=== false){
+                toast.error(response.message,{
+                    autoclose:1000,
+                })
+            }
+
+        }
+        catch(error){
+            toast.error(error.message)
+        }
        
     }
     return (

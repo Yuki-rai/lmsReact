@@ -32,12 +32,6 @@ function Sidebar(props) {
                     <Typography variant="h6" noWrap component="div">
                         LMS
                     </Typography>
-                    <List>
-                        <ListItem>
-                            <Link onClick={props.login}> Login
-                            </Link>
-                        </ListItem>
-                    </List>
                 </Toolbar>
             </AppBar>
             <Drawer
@@ -62,7 +56,9 @@ function Sidebar(props) {
                                 </ListItemIcon>
                                 <ListItemText primary="Home" />
                             </ListItemButton>
-                        </Link>
+                        </Link>                    
+
+
                         <ListItemButton sx={{ padding: '15px' }} onClick={handleListItem}>
                             <ListItemIcon sx={{ fontSize: '25px' }}>
                                 <FaWrench />
@@ -92,10 +88,18 @@ function Sidebar(props) {
                                 })}
                             </List>
                         </Collapse>
-
-
-
-
+                        <Link to="/Issue" style={{
+                            color: 'inherit',
+                            textDecoration: 'none',
+                            width: '100%'
+                        }}>
+                            <ListItemButton sx={{ padding: '15px' }} >
+                                <ListItemIcon sx={{ fontSize: '25px' }}>
+                                    <MdBook />
+                                </ListItemIcon>
+                                <ListItemText primary="Issue" />
+                            </ListItemButton>
+                        </Link>
                     </List>
                     <Divider />
                     <List>
@@ -139,9 +143,9 @@ const mainArray = [
 
     },
     {
-        label: "Issue",
+        label: "Category",
         icon: <MdBook />,
-        to: "/Issue",
+        to: "/Category",
 
     }
 ]

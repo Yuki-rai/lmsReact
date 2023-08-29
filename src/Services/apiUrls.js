@@ -12,6 +12,16 @@ const apiUrls = {
         faculty:{
             method:"GET",
             url:"/GetAllFaculty",
+        },
+        createFaculty:{
+            method:"POST",
+            url:"/CreateFaculty"
+        }
+    }    ,
+    category:{
+        category:{
+            method:"GET",
+            url:"/GetAllCategory",
         }
     }    ,
     student:{

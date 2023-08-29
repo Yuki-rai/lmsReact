@@ -1,12 +1,12 @@
 import { Box, Button, Checkbox, Container, FormControl, FormControlLabel, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { loginUser } from "../../Services/apiServices/auth/loginService";
+import { loginUser } from "../../Services/apiServices/auth/LoginService";
 import { useDispatch } from "react-redux";
 import { setUserDetail } from "../../redux/userDetail";
 import { toast } from "react-toastify";
 import { Navigate, useNavigate } from "react-router-dom";
-import Home from "../Home";
+import Home from "../Home/Home";
 import Faculty from "../Faculty/Faculty";
 
 export default function Login() {
@@ -21,23 +21,14 @@ export default function Login() {
     const onSubmit = async (data) => {
         loginUser(data).then((response) => {
             if (response.status === true) {
-                debugger
                 dispatch(setUserDetail(response));
-                // toast.success(`${response.data.name} Loggedin Successfully`, {
-                //     icon: "🚀",
-                //     autoClose: 1000,
-                //   });
-                toast('🦄 Wow so easy!', {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                    });
-                navigate("/Faculty")
+                console.log(response)
+                toast.success(`${response.data.name} Loggedin Successfully`, {
+                    icon: "🚀",
+                    autoClose: 2000,
+                    position:'top-right',
+                  });
+                navigate("/")
             }
             else {
                 toast.error(response.message, {

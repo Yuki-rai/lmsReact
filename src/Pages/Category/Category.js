@@ -11,9 +11,9 @@ import { Button, Toolbar } from '@mui/material';
 import { FaTrash } from 'react-icons/fa'
 import { BsPencilSquare } from 'react-icons/bs'
 import { Link } from 'react-router-dom';
-import { facultyService } from '../../Services/apiServices/faculty/facultyServices';
+import { category } from '../../Services/apiServices/category/categoryServices';
 
-export default function Faculty() {
+export default function Category() {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [apiData, setApiData] = useState([]);
@@ -27,10 +27,11 @@ export default function Faculty() {
     };
     useEffect(() => {
         const fetchedData = () =>{
-            facultyService().then(({status,data})=>{
+            category().then(({status,data,message})=>{
                 try{
                     if(status){
                         setApiData(data);
+                        console.log(apiData);
                     }
                 }
                 catch(error){
@@ -43,8 +44,8 @@ export default function Faculty() {
 
     return (<>
         <Toolbar>
-            <h1>Faculty</h1>
-            <Link to={"/Faculty/Create"}>
+            <h1>Category</h1>
+            <Link to={"/Category/Create"}>
                 <Button variant="contained" color="success">
                     Create
                 </Button>
