@@ -11,9 +11,9 @@ import { Button, Toolbar } from '@mui/material';
 import { FaTrash } from 'react-icons/fa'
 import { BsPencilSquare } from 'react-icons/bs'
 import { Link } from 'react-router-dom';
-import { categoryService } from '../../Services/apiServices/category/categoryServices';
+import { bookService } from '../../Services/apiServices/book/bookServices';
 
-export default function Category() {
+export default function Book() {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [apiData, setApiData] = useState([]);
@@ -26,26 +26,25 @@ export default function Category() {
         setPage(0);
     };
     useEffect(() => {
-        const fetchedData = () =>{
-            categoryService().then(({status,data,message})=>{
-                try{
-                    if(status){
+        const fetchedData = () => {
+            bookService().then(({ status, data }) => {
+                try {
+                    if (status) {
                         setApiData(data);
-                        console.log(apiData);
                     }
                 }
-                catch(error){
-                        alert("asd")
+                catch (error) {
+                    alert("asd")
                 }
             })
         }
-        fetchedData()       
+        fetchedData()
     }, [true])
 
     return (<>
-         <Toolbar sx={{flexDirection:`column`,alignItems:'flex-start'}}>
-            <h1>Category</h1>
-            <Link to={"/Category/Create"}>
+        <Toolbar sx={{flexDirection:`column`,alignItems:'flex-start'}}>
+            <h1>Book</h1>
+            <Link to={"/Book/Create"}>
                 <Button variant="contained" color="success" sx={{marginBottom:`20px`}}>
                     Create
                 </Button>
@@ -63,7 +62,7 @@ export default function Category() {
                             <TableCell>
                                 Name
                             </TableCell>
-                          
+
                             <TableCell>
                                 Action
                             </TableCell>
@@ -79,7 +78,7 @@ export default function Category() {
                                     <TableCell>
                                         {item?.name}
                                     </TableCell>
-                                  
+
                                     <TableCell>
                                         <Button sx={{ margin: "4px" }} variant="contained" startIcon={<BsPencilSquare />}>
                                             Edit

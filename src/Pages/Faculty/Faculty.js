@@ -42,10 +42,10 @@ export default function Faculty() {
     }, [true])
 
     return (<>
-        <Toolbar>
+       <Toolbar sx={{flexDirection:`column`,alignItems:'flex-start'}}>
             <h1>Faculty</h1>
             <Link to={"/Faculty/Create"}>
-                <Button variant="contained" color="success">
+                <Button variant="contained" color="success" sx={{marginBottom:`20px`}}>
                     Create
                 </Button>
             </Link>

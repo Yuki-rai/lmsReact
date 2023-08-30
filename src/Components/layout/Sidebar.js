@@ -88,7 +88,7 @@ function Sidebar(props) {
                                 })}
                             </List>
                         </Collapse>
-                        <Link to="/Issue" style={{
+                        <Link to="/IssueBook" style={{
                             color: 'inherit',
                             textDecoration: 'none',
                             width: '100%'
@@ -97,7 +97,7 @@ function Sidebar(props) {
                                 <ListItemIcon sx={{ fontSize: '25px' }}>
                                     <MdBook />
                                 </ListItemIcon>
-                                <ListItemText primary="Issue" />
+                                <ListItemText primary="Issue Book" />
                             </ListItemButton>
                         </Link>
                     </List>

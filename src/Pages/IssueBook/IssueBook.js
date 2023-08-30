@@ -11,9 +11,9 @@ import { Button, Toolbar } from '@mui/material';
 import { FaTrash } from 'react-icons/fa'
 import { BsPencilSquare } from 'react-icons/bs'
 import { Link } from 'react-router-dom';
-import { categoryService } from '../../Services/apiServices/category/categoryServices';
+import { issueBookService } from '../../Services/apiServices/issueBook/issueBookServices';
 
-export default function Category() {
+export default function IssueBookBook() {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [apiData, setApiData] = useState([]);
@@ -27,11 +27,10 @@ export default function Category() {
     };
     useEffect(() => {
         const fetchedData = () =>{
-            categoryService().then(({status,data,message})=>{
+            issueBookService().then(({status,data})=>{
                 try{
                     if(status){
                         setApiData(data);
-                        console.log(apiData);
                     }
                 }
                 catch(error){
@@ -43,14 +42,13 @@ export default function Category() {
     }, [true])
 
     return (<>
-         <Toolbar sx={{flexDirection:`column`,alignItems:'flex-start'}}>
-            <h1>Category</h1>
-            <Link to={"/Category/Create"}>
+        <Toolbar sx={{flexDirection:`column`,alignItems:'flex-start'}}>
+            <h1 >Issue Book</h1>
+            <Link to={"/IssueBook/Create"}>
                 <Button variant="contained" color="success" sx={{marginBottom:`20px`}}>
                     Create
                 </Button>
             </Link>
-
         </Toolbar >
         <Paper sx={{ width: '100%', overflow: 'hidden', borderRadius: '20px' }}>
             <TableContainer sx={{ maxHeight: 440 }}>

@@ -17,18 +17,50 @@ const apiUrls = {
             method:"POST",
             url:"/CreateFaculty"
         }
-    }    ,
+    },
+    issueBook:{
+        issueBook:{
+            method:"GET",
+            url:"/GetAllIssueBook",
+        },
+        createIssueBook:{
+            method:"POST",
+            url:"/CreateIssueBook"
+        }
+    },
+
+    book:{
+        book:{
+            method:"GET",
+            url:"/GetAllBook",
+        },
+        createBook:{
+            method:"POST",
+            url:"/CreateBook"
+        }
+    },
+
+    student:{
+        student:{
+            method:"GET",
+            url:"/GetAllStudent",
+        },
+        createStudent:{
+            method:"POST",
+            url:"/CreateStudent"
+        }
+    },
+
     category:{
         category:{
             method:"GET",
             url:"/GetAllCategory",
-        }
-    }    ,
-    student:{
-        student:{
-            method:"GET",
-            url:"/GetAllStudent"
-        }
-    }
+        },
+        createCategory:{
+            method:"POST",
+            url:"/CreateCategory"
+        },
+    },
+   
 }
 export default apiUrls
