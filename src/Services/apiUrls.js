@@ -61,6 +61,14 @@ const apiUrls = {
             url:"/CreateCategory"
         },
     },
+    common:{
+        gender:{
+            gender:{
+                method:"GET",
+                url:"/GetGender"
+            }
+        }
+    }
    
 }
 export default apiUrls

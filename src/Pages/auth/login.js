@@ -10,7 +10,7 @@ import Home from "../Home/Home";
 import Faculty from "../Faculty/Faculty";
 
 export default function Login() {
-    const { register, handleSubmit } = useForm()
+    const { register, handleSubmit,formState:{isSubmitting} } = useForm()
     const [checked, setChecked] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate()
@@ -53,7 +53,7 @@ export default function Login() {
                         padding: `10px`
                     }}>
                         <TextField
-
+                            autoComplete="username"
                             fullWidth
                             id="email"
                             label="Email"
@@ -64,6 +64,7 @@ export default function Login() {
                     }}>
                         <TextField
                             fullWidth
+                            autoComplete="current-password"
                             label="Password"
                             type="password"
                             id="password"
@@ -86,7 +87,7 @@ export default function Login() {
                         type="submit"
                         variant="contained"
                         sx={{ textTransform: `none` }}
-                    > Sign In</Button>
+                    > {isSubmitting?"Signing in..":"Sign In"}</Button>
                 </Box>
             </form>
         </Box>

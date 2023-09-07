@@ -9,17 +9,32 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { createBookService } from '../../Services/apiServices/book/bookServices';
 import { toast } from 'react-toastify';
-
+import { useState, useEffect } from 'react';
+import { categoryService } from '../../Services/apiServices/category/categoryServices';
 
 export default function CreateBook() {
     const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm();
     const navigate = useNavigate();
 
+    const [categoryList, setCategoryList] = useState([]);
 
-    
+    useEffect(() => {
+        let categoryData = () => {
+            categoryService().then((response) => {
+                try {
+                    if (response.status === true) {
+                        setCategoryList(response.data);
+                    }
+                }
+                catch (error) { }
+            });
+        }
+        categoryData();
+    }, false)
+
     const onSubmit = async (data) => {
         try {
-            debugger;
+            console.log(categoryList);
             if (isSubmitting) return;
             const response = await createBookService(data);
             if (response.status === true) {
@@ -32,10 +47,12 @@ export default function CreateBook() {
                     autoclose: 1000,
                 })
             }
+
         }
         catch (error) {
             toast.error(error.message)
         }
+
     }
     return (
         <>
@@ -45,7 +62,6 @@ export default function CreateBook() {
                 <Box sx={{ bgcolor: 'white', padding: '10px', marginTop: '15px', borderRadius: '20px' }}>
                     <Box component="form" sx={{ padding: `10px` }} onSubmit={handleSubmit(onSubmit)} >
                         <FormGroup sx={{ display: `flex`, flexDirection: `row` }}>
-
                             <SInputField>
                                 <FormControl>
                                     <TextField
@@ -65,22 +81,24 @@ export default function CreateBook() {
                                     />
                                 </FormControl>
                             </SInputField>
-
                             <SInputField>
-                                <FormControl>
-                                    <InputLabel id="Category">Category</InputLabel>
+                                <FormControl fullWidth>
+                                    <InputLabel id="category">Category</InputLabel>
                                     <Select
-                                        labelId="Category"
-                                        id="demo-simple-select"
+                                        labelId="category"
+                                        id="category-select"
                                         label="Category"
+                                        {...register("categoryId")}
                                     >
-                                        <MenuItem value={10}>Ten</MenuItem>
-                                        <MenuItem value={20}>Twenty</MenuItem>
-                                        <MenuItem value={30}>Thirty</MenuItem>
+                                        {categoryList.map((item, index) => (
+                                            <MenuItem key={index} value={item.id}>
+                                                {item.name}
+                                            </MenuItem>
+                                        ))}
                                     </Select>
                                 </FormControl>
                             </SInputField>
-
+                           
                         </FormGroup>
 
                         <Stack direction="row" spacing={2} sx={{ margin: `20px 20px 20px 5px` }}>

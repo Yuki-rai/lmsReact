@@ -75,7 +75,7 @@ export default function Student() {
                                         {(item?.id)}
                                     </TableCell>
                                     <TableCell>
-                                        {item?.name}
+                                        {item?.firstName} {item?.lastName}
                                     </TableCell>
                                   
                                     <TableCell>

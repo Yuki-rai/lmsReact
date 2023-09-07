@@ -8,6 +8,7 @@ export const urls={
     categoryUrl:`${baseUrl}/Admin/Category`,
     bookUrl:`${baseUrl}/Admin/Book`,
     issueBookUrl:`${baseUrl}/Admin/IssueBook`,
+    commonUrl:`${baseUrl}/Common`
 }
 
 export const authApi = async (method,url,data)=>{
@@ -78,6 +79,19 @@ export const categoryApi = async (method,url,data)=>{
     let response = await axios({
         method,
         url:`${urls.categoryUrl}${url}`,
+        data,
+        headers:{
+            Authorization:`Bearer ${token.userDetail.user?.data?.token}`,
+        },
+    });
+    return response.data;
+}
+
+export const commonApi = async (method,url,data)=>{
+    const token = store.getState();
+    let response = await axios({
+        method,
+        url:`${urls.commonUrl}${url}`,
         data,
         headers:{
             Authorization:`Bearer ${token.userDetail.user?.data?.token}`,
