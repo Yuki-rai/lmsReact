@@ -16,14 +16,33 @@ import { GiBookCover } from 'react-icons/gi'
 import { MdBook, MdExpandLess, MdExpandMore } from 'react-icons/md'
 import { FiLogOut } from 'react-icons/fi'
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
-import { Collapse } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { Button, Collapse, Modal } from '@mui/material';
 const drawerWidth = 240;
 function Sidebar(props) {
+    
+const modalStyle = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'white',
+    border: '1px solid silver',
+    outline:'none',
+    p: 4,
+    padding:'20px'
+  };
+
     const [open, setOpen] = useState(false);
+    const[modalOpen,setModalOpen] = useState(false);
     const handleListItem = () => {
         setOpen(!open);
     }
+    const handleModalOpen = ()=>{
+        setModalOpen(!modalOpen);
+    }
+
 
     return (
         <div>
@@ -56,7 +75,7 @@ function Sidebar(props) {
                                 </ListItemIcon>
                                 <ListItemText primary="Home" />
                             </ListItemButton>
-                        </Link>                    
+                        </Link>
 
 
                         <ListItemButton sx={{ padding: '15px' }} onClick={handleListItem}>
@@ -103,25 +122,49 @@ function Sidebar(props) {
                     </List>
                     <Divider />
                     <List>
-                        {secondaryArray.map(({ label, icon, to }) => {
-                            return (
-                                <ListItem key={label} disablePadding>
 
-                                    <ListItemButton sx={{ padding: '15px' }}>
-                                        <ListItemIcon sx={{ fontSize: '25px' }}>
-                                            {icon}
-                                        </ListItemIcon>
-                                        <ListItemText primary={label} />
-                                    </ListItemButton>
-                                </ListItem>
-                            )
-                        })}
+                        <ListItemButton sx={{ padding: '15px' }} >
+                            <ListItemIcon sx={{ fontSize: '25px' }}>
+                                <AiOutlineSetting />
+                            </ListItemIcon>
+                            <ListItemText primary="Setting" />
+                        </ListItemButton>
+
+                        <ListItemButton sx={{ padding: '15px' }} onClick={handleModalOpen}  >
+                            <ListItemIcon sx={{ fontSize: '25px' }}>
+                                <FiLogOut />
+                            </ListItemIcon>
+                            <ListItemText primary="Log out" />
+                        </ListItemButton>
                     </List>
                 </Box>
             </Drawer>
+
+                {/* Log Out Modal Pop up */}
+            <Modal
+                open={modalOpen}
+                onClose={handleModalOpen}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={modalStyle}>
+                    <Typography id="modal-modal-title" variant="h6" component="h2" sx={{padding:`20px`,textAlign:`center`}}>
+                        Are you sure,<br/> you want to logoout?
+                    </Typography>
+                    <Toolbar sx={{justifyContent:'space-evenly'}}>
+                    <Button variant="contained">Log Out</Button>
+                    <Button variant="outlined" color='error'>Cancel</Button>
+                    </Toolbar>
+                    
+                </Box>
+            </Modal>
+
         </div >
     )
 }
+
+
+
 
 const mainArray = [
 
@@ -150,17 +193,5 @@ const mainArray = [
     }
 ]
 
-const secondaryArray = [
-    {
-        label: "Settings",
-        icon: <AiOutlineSetting />,
-        to: "/Settings"
-    },
-    {
-        label: "Logout",
-        icon: <FiLogOut />,
-        to: "/"
-    }
-]
 export default Sidebar
 

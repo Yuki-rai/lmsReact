@@ -26,6 +26,22 @@ const apiUrls = {
         createIssueBook:{
             method:"POST",
             url:"/CreateIssueBook"
+        },
+        issueBookById:{
+            method:"GET",
+            url:"/GetIssueBookById/"
+        },
+        editIssueBook:{
+            method:"PUT",
+            url:"/EditIssueBook"
+        },
+        returnIssuedbook:{
+            method:"POST",
+            url:"/ReturnIssuedBook"
+        },
+        deleteIssueBook:{
+            method:"DELETE",
+            url:"/DeleteIssueBook"
         }
     },
 

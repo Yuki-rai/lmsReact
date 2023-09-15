@@ -12,8 +12,8 @@ import CreateStudent from "./Pages/Student/Create";
 import CreateBook from "./Pages/Book/Create";
 import Book from "./Pages/Book/Book";
 import IssueBook from "./Pages/IssueBook/IssueBook";
-import CreateIssue from "./Pages/IssueBook/Create";
 import CreateIssueBook from "./Pages/IssueBook/Create";
+import EditIssueBook from "./Pages/IssueBook/Edit";
 
 export default function Gateway() {
     return (
@@ -31,6 +31,7 @@ export default function Gateway() {
                 <Route exact path="/Book/Create" element={<CreateBook />} />
                 <Route exact path="/IssueBook" element={<IssueBook />} />
                 <Route exact path="/IssueBook/Create" element={<CreateIssueBook />} />
+                <Route exact path="/IssueBook/Edit/:id" element={<EditIssueBook />} />
                 <Route exact path="/*" element={<div> Nothing </div>} />
             </Route>
         </Routes>

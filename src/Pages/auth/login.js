@@ -19,10 +19,10 @@ export default function Login() {
     }
 
     const onSubmit = async (data) => {
+        if (isSubmitting) return;
         loginUser(data).then((response) => {
             if (response.status === true) {
                 dispatch(setUserDetail(response));
-                console.log(response)
                 toast.success(`${response.data.name} Loggedin Successfully`, {
                     icon: "🚀",
                     autoClose: 2000,
@@ -36,6 +36,11 @@ export default function Login() {
                 });
             }
         })
+        .catch(
+            error=>{
+                console.log()
+            }
+        )
     }
 
     return (
@@ -71,7 +76,6 @@ export default function Login() {
                             {...register("password")}
                         />
                     </FormControl>
-
                     <FormControlLabel
                         sx={{ alignItems: `center` }}
                         label="Remember Me"

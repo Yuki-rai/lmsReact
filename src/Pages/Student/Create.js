@@ -14,18 +14,15 @@ import { useEffect,useState } from 'react';
 import { facultyService } from '../../Services/apiServices/faculty/facultyServices';
 import { genderService } from '../../Services/apiServices/common/gender/genderService';
 export default function CreateStudent() {
-    const { register, handleSubmit, formState:{errors,isSubmitting} } = useForm();
+    const { register, handleSubmit, formState:{errors,isSubmitting},setValue } = useForm();
     const navigate = useNavigate();
     const [facultyList, setFacultyList] = useState([]);
     const [genderList, setGenderList] = useState([]);
-    const [birthDate,setBirthDate] =useState("");
     const handleBirthDate=(data)=>(
-        setBirthDate(data.toISOString().slice(0, 10))
+        setValue("birthDate")
     )
     const onSubmit = async (data)=>{
         try{
-            debugger;
-            data.birthDate=birthDate
             if(isSubmitting) return;
             const response = await createStudentService(data);
             if(response.status=== true){
@@ -109,7 +106,7 @@ export default function CreateStudent() {
                                     >
                                         {facultyList.map((item, index) => (
                                             <MenuItem key={index} value={item.id}>
-                                                {item.name}
+                                                {item.name} 
                                             </MenuItem>
                                         ))}
                                     </Select>
