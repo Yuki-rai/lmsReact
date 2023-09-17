@@ -13,7 +13,8 @@ export const userSlice = createSlice({
       state.user = action.payload;
     },
     logout : (state) => {
-    //   state.user = "null",
+      debugger
+      state.user=null;
       localStorage.removeItem("user")
     },
     approvalStatus : (state,action) => {

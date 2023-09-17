@@ -18,6 +18,8 @@ import { FiLogOut } from 'react-icons/fi'
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Button, Collapse, Modal } from '@mui/material';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../redux/userDetail';
 const drawerWidth = 240;
 function Sidebar(props) {
     
@@ -36,6 +38,7 @@ const modalStyle = {
 
     const [open, setOpen] = useState(false);
     const[modalOpen,setModalOpen] = useState(false);
+    const dispatch = useDispatch();
     const handleListItem = () => {
         setOpen(!open);
     }
@@ -149,11 +152,11 @@ const modalStyle = {
             >
                 <Box sx={modalStyle}>
                     <Typography id="modal-modal-title" variant="h6" component="h2" sx={{padding:`20px`,textAlign:`center`}}>
-                        Are you sure,<br/> you want to logoout?
+                        Are you sure,<br/> you want to log out?
                     </Typography>
                     <Toolbar sx={{justifyContent:'space-evenly'}}>
-                    <Button variant="contained">Log Out</Button>
-                    <Button variant="outlined" color='error'>Cancel</Button>
+                    <Button variant="contained" onClick={()=>dispatch(logout())}>Log Out</Button>
+                    <Button variant="outlined" color='error' onClick={handleModalOpen}>Cancel</Button>
                     </Toolbar>
                     
                 </Box>

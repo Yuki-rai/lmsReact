@@ -18,3 +18,32 @@ export const createBookService = async (data)=>{
     return response;
 
 }
+
+
+export const editBookService = async(data)=>{
+    let response = await bookApi(
+        apiUrls.book.editBook.method,
+        apiUrls.book.editBook.url ,
+        data
+    );
+    return response;
+}
+
+export const deleteBookService = async(id)=>{
+    debugger
+    let response = await bookApi(
+        apiUrls.book.deleteBook.method,
+        apiUrls.book.deleteBook.url +"?id="+id,
+    );
+    return response
+
+}
+
+export const bookByIdService = async (id)=>{
+    let response = await bookApi(
+        apiUrls.book.bookById.method,
+        apiUrls.book.bookById.url+"?id="+id ,
+        
+    )
+    return response
+}

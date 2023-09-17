@@ -53,15 +53,6 @@ export default function CreateFaculty() {
                                 />
                                 </FormControl>
                             </SInputField>
-                            {/* <SInputField>
-                                <DatePicker
-                                    label='Birth Date'
-                                    disableFuture
-                                    format='YYYY-MM-DD'
-                                    defaultValue={today} type="date"
-                                    onChange={(data) => handleInputChange(data.toISOString().slice(0, 10), "birthDate")}
-                                />
-                            </SInputField> */}
                         </FormGroup>
 
                         <Stack direction="row" spacing={2} sx={{ margin: `20px 20px 20px 5px` }}>

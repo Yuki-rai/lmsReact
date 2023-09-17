@@ -13,7 +13,7 @@ import { BsPencilSquare } from 'react-icons/bs'
 import { Link } from 'react-router-dom';
 import { deleteIssueBookService, issueBookService, returnIssuedBookService } from '../../Services/apiServices/issueBook/issueBookServices';
 import { toast } from 'react-toastify';
-export default function IssueBookBook() {
+export default function IssueBook() {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [apiData, setApiData] = useState([]);
@@ -55,6 +55,8 @@ export default function IssueBookBook() {
                             autoClose: 2000
                         })
                         handleOpen()
+                        setChange(!change)
+
                     }
                     else {
                         toast.error("Error while Deleting", {
@@ -62,9 +64,7 @@ export default function IssueBookBook() {
                         })
                     }
                 })
-                window.location.reload()
         }
-        setChange(!change)
 
     }
 
@@ -106,6 +106,9 @@ export default function IssueBookBook() {
                 try {
                     if (status) {
                         setApiData(data);
+                    }
+                    else{
+                        setApiData([]);
                     }
                 }
                 catch (error) {

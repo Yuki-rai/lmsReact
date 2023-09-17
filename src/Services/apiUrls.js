@@ -16,6 +16,18 @@ const apiUrls = {
         createFaculty:{
             method:"POST",
             url:"/CreateFaculty"
+        },
+        editFaculty:{
+            method:"PUT",
+            url:"/EditFaculty"
+        },
+        deleteFaculty:{
+            method:"DELETE",
+            url:"/DeleteFaculty"
+        },
+        facultyById:{
+            method:"GET",
+            url:"/GetFacultyById"
         }
     },
     issueBook:{
@@ -53,6 +65,18 @@ const apiUrls = {
         createBook:{
             method:"POST",
             url:"/CreateBook"
+        },
+        editBook: {
+            method: "PUT",
+            url: "/EditBook"
+        },
+        deleteBook: {
+            method: "DELETE",
+            url: "/DeleteBook"
+        },
+        bookById: {
+            method: "GET",
+            url: "/GetBookById"
         }
     },
 
@@ -61,9 +85,21 @@ const apiUrls = {
             method:"GET",
             url:"/GetAllStudent",
         },
-        createStudent:{
-            method:"POST",
-            url:"/CreateStudent"
+        createStudent: {
+            method: "POST",
+            url: "/CreateStudent"
+        },
+        editStudent: {
+            method: "PUT",
+            url: "/EditStudent"
+        },
+        deleteStudent: {
+            method: "DELETE",
+            url: "/DeleteStudent"
+        },
+        studentById: {
+            method: "GET",
+            url: "/GetStudentById"
         }
     },
 
@@ -76,6 +112,18 @@ const apiUrls = {
             method:"POST",
             url:"/CreateCategory"
         },
+        editCategory: {
+            method: "PUT",
+            url: "/EditCategory"
+        },
+        deleteCategory: {
+            method: "DELETE",
+            url: "/DeleteCategory"
+        },
+        categoryById: {
+            method: "GET",
+            url: "/GetCategoryById"
+        }
     },
     common:{
         gender:{

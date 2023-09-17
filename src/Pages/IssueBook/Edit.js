@@ -83,6 +83,7 @@ export default function EditIssueBook() {
             remarks: apiData?.remarks || ""
         });
     }, [apiData]);
+    
     useEffect(() => {
         // Use setValue to set values for each input field
         setValue("id",initialValue.id)
@@ -91,12 +92,7 @@ export default function EditIssueBook() {
         setValue("returnDate", initialValue.returnDate);
         setValue("remarks", initialValue.remarks);
     }, [initialValue]);
-    console.log(initialValue,"initial")
  
-
-
-
-
     const handleReturnDate = (data) => (
         setValue("returnDate", data)
 

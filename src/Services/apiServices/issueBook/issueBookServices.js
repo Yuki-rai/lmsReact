@@ -26,10 +26,10 @@ export const returnIssuedBookService = async (id,status)=>{
     return response;
 }
 
-export const issueBookByIdService = async (data)=>{
+export const issueBookByIdService = async (id)=>{
     let response = await issueBookApi(
         apiUrls.issueBook.issueBookById.method,
-        apiUrls.issueBook.issueBookById.url+"?id="+data ,
+        apiUrls.issueBook.issueBookById.url+"?id="+id ,
         
     )
     return response
