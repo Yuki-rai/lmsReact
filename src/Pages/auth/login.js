@@ -6,8 +6,6 @@ import { useDispatch } from "react-redux";
 import { setUserDetail } from "../../redux/userDetail";
 import { toast } from "react-toastify";
 import { Navigate, useNavigate } from "react-router-dom";
-import Home from "../Home/Home";
-import Faculty from "../Faculty/Faculty";
 
 export default function Login() {
     const { register, handleSubmit,formState:{isSubmitting} } = useForm()
@@ -26,8 +24,8 @@ export default function Login() {
                 toast.success(`${response.data.name} Loggedin Successfully`, {
                     icon: "🚀",
                     autoClose: 2000,
-                    position:'top-right',
-                  });
+                    position: 'top-right',
+                });
                 navigate("/")
             }
             else {
@@ -36,12 +34,15 @@ export default function Login() {
                 });
             }
         })
-        .catch(
-            error=>{
-                console.log()
-            }
-        )
+            .catch(() => {
+                toast.error("Login Failure", {
+                    autoClose: 3000,
+                });
+            })
+
     }
+
+
 
     return (
         <Box sx={{ display: `flex`, background: `white`, width: `500px`, border: `silver solid 1px`, borderRadius: `10px`, height: `500px`, alignItems: `center`, margin: `50px auto`, flexDirection: `column`, gap: `16px` }}>

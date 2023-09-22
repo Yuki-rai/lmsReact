@@ -50,6 +50,7 @@ export default function Gateway() {
                 <Route exact path="/IssueBook" element={<IssueBook />} />
                 <Route exact path="/IssueBook/Create" element={<CreateIssueBook />} />
                 <Route exact path="/IssueBook/Edit/:id" element={<EditIssueBook />} />
+                
                 <Route exact path="/*" element={<div> Nothing </div>} />
             </Route>
         </Routes>

@@ -4,7 +4,7 @@ import Gateway from "./Gateway";
 import { ToastContainer } from "react-toastify";
 import { CssBaseline } from "@mui/material";
 import 'react-toastify/dist/ReactToastify.css';
-
+import './styles/global.css'
 function App() {
 
   return (

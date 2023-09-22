@@ -48,14 +48,8 @@ const modalStyle = {
 
 
     return (
-        <div>
-            <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
-                <Toolbar>
-                    <Typography variant="h6" noWrap component="div">
-                        LMS
-                    </Typography>
-                </Toolbar>
-            </AppBar>
+        <>
+           
             <Drawer
                 variant="permanent"
                 sx={{
@@ -162,7 +156,7 @@ const modalStyle = {
                 </Box>
             </Modal>
 
-        </div >
+        </ >
     )
 }
 
