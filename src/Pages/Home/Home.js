@@ -8,12 +8,42 @@ import { GiBlackBook } from "react-icons/gi";
 import { PiStudentLight } from "react-icons/pi";
 import { AiOutlineSmile } from "react-icons/ai";
 import { dashboardService } from "../../Services/apiServices/dashboard/dashboardService";
-
+import randomColor from "randomcolor";
 ChartJs.register(
     BarElement, CategoryScale, LinearScale, Tooltip, Legend, PointElement, LineElement, ArcElement
 )
 
 export default function Home() {
+
+    //Fetch
+    const [apiData, setApiData] = useState([]);
+    useEffect(() => {
+        let dashboardData = () => {
+            dashboardService()
+                .then((response) => {
+                    if (response.data) {
+                        debugger
+                        setApiData(response.data.data)
+                        setDonutData({
+                            ...donutData,
+                            labels: response.data.data.preferenceCountList.map((item) => item?.name),
+                            datasets:[{
+                                ...donutData.datasets[0],
+                                data: response.data.data.preferenceCountList.map((item) => item?.count),
+                                
+                                backgroundColor:randomColor({count:response.data.data.preferenceCountList.length})
+
+                            }],
+
+                        })
+                    }
+                })
+        }
+        dashboardData();
+
+    }, [])
+
+    //Bar Graph
     const data = {
         labels: ['mon', 'Tues', 'Weds', 'Thurs', 'Sat', 'Sun'],
         datasets: [
@@ -50,16 +80,13 @@ export default function Home() {
 
 
     };
-
-    const donutData = {
-        labels: [
-            'Red',
-            'Blue',
-            'Violet'
-        ],
+    
+    //Donut Graph
+    const [donutData,setDonutData] = useState({
+            labels: ["red","blue","violet"],
         datasets: [{
-            label: 'My First Dataset',
-            data: [300, 50, 100],
+            label: 'User Count',
+            data: [5,4,6],
             backgroundColor: [
                 'rgb(255, 99, 132)',
                 'rgb(7, 131, 247)',
@@ -67,9 +94,10 @@ export default function Home() {
             ],
             hoverOffset: 4
         }]
-    }
+    });
+
     const donutOptions = {
-        cutout: 125,
+        cutout: 100,
         plugins: {
             title: {
                 display: true,
@@ -82,21 +110,7 @@ export default function Home() {
 
         }
     }
-    const [apiData, setApiData] = useState([]);
-    useEffect(() => {
-        let dashboardData = () => {
-            dashboardService()
-                .then((response) => {
-                    if (response.status) {
-                        debugger
-                        setApiData(response.data)
-                    }
-                })
-        }
-        dashboardData();
-
-    }, [])
-
+   
 
 
 
@@ -119,7 +133,7 @@ export default function Home() {
 
                             <div className="flex">
                                 <div className="count">
-                                    <Typography fontSize={40}>0</Typography>
+                                    <Typography fontSize={40}>{apiData.bookCount}</Typography>
                                 </div>
                             </div>
                         </div>
@@ -140,7 +154,7 @@ export default function Home() {
 
                             <div className="flex">
                                 <div className="count">
-                                    <Typography fontSize={40}>0</Typography>
+                                    <Typography fontSize={40}>{apiData.issuedCount}</Typography>
                                 </div>
                             </div>
                         </div>
@@ -161,7 +175,7 @@ export default function Home() {
 
                             <div className="flex">
                                 <div className="count">
-                                    <Typography fontSize={40}>0</Typography>
+                                    <Typography fontSize={40}>{apiData.studentCount}</Typography>
                                 </div>
                             </div>
                         </div>
