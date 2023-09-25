@@ -1,70 +1,70 @@
 const apiUrls = {
-    auth:{
-        loginUser:{
-            method:"POST",
-            url:"/Login"
+    auth: {
+        loginUser: {
+            method: "POST",
+            url: "/Login"
 
         }
     },
 
 
-    faculty:{
-        faculty:{
-            method:"GET",
-            url:"/GetAllFaculty",
+    faculty: {
+        faculty: {
+            method: "GET",
+            url: "/GetAllFaculty",
         },
-        createFaculty:{
-            method:"POST",
-            url:"/CreateFaculty"
+        createFaculty: {
+            method: "POST",
+            url: "/CreateFaculty"
         },
-        editFaculty:{
-            method:"PUT",
-            url:"/EditFaculty"
+        editFaculty: {
+            method: "PUT",
+            url: "/EditFaculty"
         },
-        deleteFaculty:{
-            method:"DELETE",
-            url:"/DeleteFaculty"
+        deleteFaculty: {
+            method: "DELETE",
+            url: "/DeleteFaculty"
         },
-        facultyById:{
-            method:"GET",
-            url:"/GetFacultyById"
+        facultyById: {
+            method: "GET",
+            url: "/GetFacultyById"
         }
     },
-    issueBook:{
-        issueBook:{
-            method:"GET",
-            url:"/GetAllIssueBook",
+    issueBook: {
+        issueBook: {
+            method: "GET",
+            url: "/GetAllIssueBook",
         },
-        createIssueBook:{
-            method:"POST",
-            url:"/CreateIssueBook"
+        createIssueBook: {
+            method: "POST",
+            url: "/CreateIssueBook"
         },
-        issueBookById:{
-            method:"GET",
-            url:"/GetIssueBookById/"
+        issueBookById: {
+            method: "GET",
+            url: "/GetIssueBookById/"
         },
-        editIssueBook:{
-            method:"PUT",
-            url:"/EditIssueBook"
+        editIssueBook: {
+            method: "PUT",
+            url: "/EditIssueBook"
         },
-        returnIssuedbook:{
-            method:"POST",
-            url:"/ReturnIssuedBook"
+        returnIssuedbook: {
+            method: "POST",
+            url: "/ReturnIssuedBook"
         },
-        deleteIssueBook:{
-            method:"DELETE",
-            url:"/DeleteIssueBook"
+        deleteIssueBook: {
+            method: "DELETE",
+            url: "/DeleteIssueBook"
         }
     },
 
-    book:{
-        book:{
-            method:"GET",
-            url:"/GetAllBook",
+    book: {
+        book: {
+            method: "GET",
+            url: "/GetAllBook",
         },
-        createBook:{
-            method:"POST",
-            url:"/CreateBook"
+        createBook: {
+            method: "POST",
+            url: "/CreateBook"
         },
         editBook: {
             method: "PUT",
@@ -80,10 +80,10 @@ const apiUrls = {
         }
     },
 
-    student:{
-        student:{
-            method:"GET",
-            url:"/GetAllStudent",
+    student: {
+        student: {
+            method: "GET",
+            url: "/GetAllStudent",
         },
         createStudent: {
             method: "POST",
@@ -103,14 +103,14 @@ const apiUrls = {
         }
     },
 
-    category:{
-        category:{
-            method:"GET",
-            url:"/GetAllCategory",
+    category: {
+        category: {
+            method: "GET",
+            url: "/GetAllCategory",
         },
-        createCategory:{
-            method:"POST",
-            url:"/CreateCategory"
+        createCategory: {
+            method: "POST",
+            url: "/CreateCategory"
         },
         editCategory: {
             method: "PUT",
@@ -125,14 +125,20 @@ const apiUrls = {
             url: "/GetCategoryById"
         }
     },
-    common:{
-        gender:{
-            gender:{
-                method:"GET",
-                url:"/GetGender"
+    common: {
+        gender: {
+            gender: {
+                method: "GET",
+                url: "/GetGender"
             }
         }
+    },
+    dashboard: {
+        dashboard: {
+            method: "GET",
+            url: "/GetDashboardData"
+        }
     }
-   
+
 }
 export default apiUrls

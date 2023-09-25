@@ -21,8 +21,8 @@ export default function IssueBook() {
     const [action, setAction] = useState("");
     const [id, setId] = useState(0);
     const [status, setStatus] = useState(false);
-    const [change,setChange]=useState(false);
-  
+    const [change, setChange] = useState(false);
+
     const handleClick = (action, id, returnStatus) => {
         setAction(action);
         setId(id);
@@ -35,14 +35,15 @@ export default function IssueBook() {
             returnIssuedBookService(id, status)
                 .then((response) => {
                     if (response.status) {
-                        toast.success("Updated Sucessfully",{
-                            autoClose:2000
+                        toast.success("Updated Sucessfully", {
+                            autoClose: 2000
                         })
                         handleOpen()
+                        setChange(!change)
                     }
                     else {
-                        toast.error("Error while Updating",{
-                            autoClose:2000
+                        toast.error("Error while Updating", {
+                            autoClose: 2000
                         })
                     }
                 })
@@ -107,7 +108,7 @@ export default function IssueBook() {
                     if (status) {
                         setApiData(data);
                     }
-                    else{
+                    else {
                         setApiData([]);
                     }
                 }

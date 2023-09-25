@@ -3,7 +3,7 @@ import Home from "./Pages/Home/Home";
 import Faculty from "./Pages/Faculty/Faculty";
 import CreateFaculty from "./Pages/Faculty/Create";
 
-import Login from "./Pages/auth/Login";
+import Login from "./Pages/auth/login";
 import { PrivateRoute } from "./util/Utility";
 import Category from "./Pages/Category/Category";
 import CreateCategory from "./Pages/Category/Create";
@@ -35,12 +35,12 @@ export default function Gateway() {
                 <Route exact path="/Student" element={<Student />} />
                 <Route exact path="/Student/Create" element={<CreateStudent />} />
                 <Route exact path="/Student/Edit/:id" element={<EditStudent />} />
-                
+
                 {/* Category */}
                 <Route exact path="/Category" element={<Category />} />
                 <Route exact path="/Category/Create" element={<CreateCategory />} />
                 <Route exact path="/Category/Edit/:id" element={<EditCategory />} />
-                    
+
                 {/* Book */}
                 <Route exact path="/Book" element={<Book />} />
                 <Route exact path="/Book/Create" element={<CreateBook />} />
@@ -50,7 +50,7 @@ export default function Gateway() {
                 <Route exact path="/IssueBook" element={<IssueBook />} />
                 <Route exact path="/IssueBook/Create" element={<CreateIssueBook />} />
                 <Route exact path="/IssueBook/Edit/:id" element={<EditIssueBook />} />
-                
+
                 <Route exact path="/*" element={<div> Nothing </div>} />
             </Route>
         </Routes>

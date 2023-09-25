@@ -1,5 +1,5 @@
-import React from "react";
-import { Chart as ChartJs, BarElement, CategoryScale, LinearScale, Tooltip, Legend, PointElement, LineElement,ArcElement } from "chart.js";
+import React, { useEffect, useState } from "react";
+import { Chart as ChartJs, BarElement, CategoryScale, LinearScale, Tooltip, Legend, PointElement, LineElement, ArcElement } from "chart.js";
 import { Bar, Line, Doughnut } from "react-chartjs-2";
 import styled from "@emotion/styled";
 import { Grid, Typography } from "@mui/material";
@@ -7,9 +7,10 @@ import { FaHome, FaWrench } from 'react-icons/fa'
 import { GiBlackBook } from "react-icons/gi";
 import { PiStudentLight } from "react-icons/pi";
 import { AiOutlineSmile } from "react-icons/ai";
+import { dashboardService } from "../../Services/apiServices/dashboard/dashboardService";
 
 ChartJs.register(
-    BarElement, CategoryScale, LinearScale, Tooltip, Legend, PointElement, LineElement,ArcElement
+    BarElement, CategoryScale, LinearScale, Tooltip, Legend, PointElement, LineElement, ArcElement
 )
 
 export default function Home() {
@@ -18,7 +19,7 @@ export default function Home() {
         datasets: [
             {
                 label: 'Last Week',
-                data: [0, 1, 2,5,4,2],
+                data: [0, 1, 2, 5, 4, 2],
                 width: 1,
                 backgroundColor: 'rgb(181, 219, 255)'
             },
@@ -31,11 +32,11 @@ export default function Home() {
         ]
     }
     const options = {
-       
+
         plugins: {
             legend: {
                 display: true,
-                
+
             },
             scales: {
                 y: {
@@ -43,15 +44,15 @@ export default function Home() {
                 },
             },
         },
-        animation:{
-            duration:2000
+        animation: {
+            duration: 2000
         },
-       
-      
+
+
     };
 
-    const donutData={
-        labels:[
+    const donutData = {
+        labels: [
             'Red',
             'Blue',
             'Violet'
@@ -68,7 +69,7 @@ export default function Home() {
         }]
     }
     const donutOptions = {
-        cutout: 125, 
+        cutout: 125,
         plugins: {
             title: {
                 display: true,
@@ -78,10 +79,23 @@ export default function Home() {
             legend: {
                 position: 'bottom'
             },
-           
+
         }
     }
+    const [apiData, setApiData] = useState([]);
+    useEffect(() => {
+        let dashboardData = () => {
+            dashboardService()
+                .then((response) => {
+                    if (response.status) {
+                        debugger
+                        setApiData(response.data)
+                    }
+                })
+        }
+        dashboardData();
 
+    }, [])
 
 
 
@@ -154,7 +168,7 @@ export default function Home() {
                     </div>
                 </Grid>
 
-                <Grid  item xs={8}>
+                <Grid item xs={8}>
                     <div className="p-5 rounded-2xl bg-white mr-5" >
                         <Typography variant="h6">User's Activity</Typography>
                         <Bar data={data} options={options}></Bar>

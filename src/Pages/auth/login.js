@@ -1,14 +1,14 @@
 import { Box, Button, Checkbox, Container, FormControl, FormControlLabel, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { loginUser } from "../../Services/apiServices/auth/LoginService";
+import { loginUser } from "../../Services/apiServices/auth/loginService";
 import { useDispatch } from "react-redux";
 import { setUserDetail } from "../../redux/userDetail";
 import { toast } from "react-toastify";
 import { Navigate, useNavigate } from "react-router-dom";
 
 export default function Login() {
-    const { register, handleSubmit,formState:{isSubmitting} } = useForm()
+    const { register, handleSubmit, formState: { isSubmitting } } = useForm()
     const [checked, setChecked] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate()
@@ -92,7 +92,7 @@ export default function Login() {
                         type="submit"
                         variant="contained"
                         sx={{ textTransform: `none` }}
-                    > {isSubmitting?"Signing in..":"Sign In"}</Button>
+                    > {isSubmitting ? "Signing in.." : "Sign In"}</Button>
                 </Box>
             </form>
         </Box>

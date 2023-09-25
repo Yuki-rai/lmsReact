@@ -3,13 +3,13 @@ import Box from '@mui/material/Box';
 import Sidebar from './Sidebar';
 import Footer from '../footer/Footer';
 import { AppBar, Avatar, Button, Toolbar, Typography } from '@mui/material';
-import {IoMdNotificationsOutline} from 'react-icons/io'
+import { IoMdNotificationsOutline } from 'react-icons/io'
 export default function Layout({ children }) {
-    
+
     return (
         <Box sx={{ display: 'flex' }}>
-             <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
-                <Toolbar sx={{justifyContent:'space-between'}}>
+            <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+                <Toolbar sx={{ justifyContent: 'space-between' }}>
                     <Typography variant="h6" noWrap component="div">
                         LMS
                     </Typography>
@@ -29,7 +29,7 @@ export default function Layout({ children }) {
                 </Toolbar>
             </AppBar>
             <Sidebar />
-            <Box component="main" sx={{ width:`100%`, margin: '80px 30px 30px 30px ', padding: `0px` }}>
+            <Box component="main" sx={{ width: `100%`, margin: '80px 30px 30px 30px ', padding: `0px` }}>
                 {children}
             </Box>
         </Box>
