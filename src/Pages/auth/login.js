@@ -5,7 +5,7 @@ import { loginUser } from "../../Services/apiServices/auth/loginService";
 import { useDispatch } from "react-redux";
 import { setUserDetail } from "../../redux/userDetail";
 import { toast } from "react-toastify";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 export default function Login() {
     const { register, handleSubmit, formState: { isSubmitting } } = useForm()
@@ -46,7 +46,7 @@ export default function Login() {
 
     return (
         <Box sx={{ display: `flex`, background: `white`, width: `500px`, border: `silver solid 1px`, borderRadius: `10px`, height: `500px`, alignItems: `center`, margin: `50px auto`, flexDirection: `column`, gap: `16px` }}>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(onSubmit)} >
 
                 <Typography component="h1" variant="h5" sx={{ textAlign: `center`, margin: `20px` }}>
                     Sign In
@@ -77,22 +77,33 @@ export default function Login() {
                             {...register("password")}
                         />
                     </FormControl>
-                    <FormControlLabel
-                        sx={{ alignItems: `center` }}
-                        label="Remember Me"
-                        onChange={handleCheckBox}
-                        control={<Checkbox value="remember" />} />
-                    <Button
-                        type="button"
-                        variant="text"
-                        color="primary"
-                        sx={{ textTransform: `none`, outlineColor: `white` }}
-                    > Forgot Password</Button>
-                    <Button
-                        type="submit"
-                        variant="contained"
-                        sx={{ textTransform: `none` }}
-                    > {isSubmitting ? "Signing in.." : "Sign In"}</Button>
+                    <div className="flex">
+                        <FormControlLabel
+                            sx={{ alignItems: `center` }}
+                            label="Remember Me"
+                            onChange={handleCheckBox}
+                            control={<Checkbox value="remember" />} />
+                        {/* <Button
+                            type="button"
+                            variant="text"
+                            color="primary"
+                            sx={{ textTransform: `none`, outlineColor: `white` }}
+                        > Forgot Password</Button> */}
+                    </div>
+                    <div className="flex justify-between mt-5">
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            sx={{ textTransform: `none` }}
+                        > {isSubmitting ? "Signing in.." : "Sign In"}</Button>
+                        <Link to="/SignUp">
+                        <Button
+                            type="button"
+                            variant="outlined"
+                            sx={{ textTransform: `none` }}
+                        > Sign Up</Button>
+                        </Link>
+                    </div>
                 </Box>
             </form>
         </Box>

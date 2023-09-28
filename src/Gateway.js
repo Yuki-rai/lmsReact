@@ -18,12 +18,14 @@ import EditFaculty from "./Pages/Faculty/Edit";
 import EditStudent from "./Pages/Student/Edit";
 import EditBook from "./Pages/Book/Edit";
 import EditCategory from "./Pages/Category/Edit";
+import { SignUp } from "./Pages/auth/signUp";
 
 
 export default function Gateway() {
     return (
         <Routes>
             <Route path="/login" element={<Login />} />
+            <Route path="/SignUp" element={<SignUp />} />
             <Route element={<PrivateRoute />}>
                 <Route path="/" element={<Home />} />
                 {/* Faculty */}

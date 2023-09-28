@@ -35,6 +35,18 @@ export default function Home() {
 
                             }],
 
+                        });
+                        setBarData({
+                            ...barData,
+                            labels: response.data.data.userActivityCountList.map((item) => item?.monthName),
+
+                            datasets:[{
+                                ...barData.datasets[0],
+                                data: response.data.data.userActivityCountList.map((item) => item?.presentCount),
+                                
+
+                            }],
+
                         })
                     }
                 })
@@ -44,23 +56,23 @@ export default function Home() {
     }, [])
 
     //Bar Graph
-    const data = {
-        labels: ['mon', 'Tues', 'Weds', 'Thurs', 'Sat', 'Sun'],
+    const [barData, setBarData] = useState({
+        labels: [],
         datasets: [
+            // {
+            //     label: 'Last Week',
+            //     data: [0, 1, 2, 5, 4, 2],
+            //     width: 1,
+            //     backgroundColor: 'rgb(181, 219, 255)'
+            // },
             {
-                label: 'Last Week',
-                data: [0, 1, 2, 5, 4, 2],
-                width: 1,
-                backgroundColor: 'rgb(181, 219, 255)'
-            },
-            {
-                label: 'This Week',
-                data: [5, 6, 15],
+                label: 'Monthly',
+                data: [],
                 borderWidth: 1,
                 backgroundColor: 'rgb(7, 131, 247)'
             }
         ]
-    }
+    })
     const options = {
 
         plugins: {
@@ -83,10 +95,10 @@ export default function Home() {
     
     //Donut Graph
     const [donutData,setDonutData] = useState({
-            labels: ["red","blue","violet"],
+            labels: [],
         datasets: [{
             label: 'User Count',
-            data: [5,4,6],
+            data: [],
             backgroundColor: [
                 'rgb(255, 99, 132)',
                 'rgb(7, 131, 247)',
@@ -185,7 +197,7 @@ export default function Home() {
                 <Grid item xs={8}>
                     <div className="p-5 rounded-2xl bg-white mr-5" >
                         <Typography variant="h6">User's Activity</Typography>
-                        <Bar data={data} options={options}></Bar>
+                        <Bar data={barData} options={options}></Bar>
                     </div>
                 </Grid>
                 <Grid item xs={4}>
