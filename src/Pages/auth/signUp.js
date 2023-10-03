@@ -1,29 +1,26 @@
-import { Box, Button, FormControl, FormGroup, Grid, TextField, Typography } from "@mui/material";
+import { Box, Button, Divider, FormControl, FormGroup, Grid, TextField, Typography } from "@mui/material";
 import img from '../../assests/img/signup.png'
 import { SInputField } from "../../Components/styles/Styles";
 import { Link } from "react-router-dom";
+import { FaFacebook, FaGooglePlusG, FaTwitter } from 'react-icons/fa'
+import { FcGoogle } from 'react-icons/fc'
 import { useState } from "react";
 export function SignUp() {
-    const [isHovered,setIsHovered] = useState(false)
+    const [isHovered, setIsHovered] = useState(false)
 
-    const handleHovered = ()=>{
+    const handleHovered = () => {
         setIsHovered(!isHovered);
     }
-    const signUpStyle =isHovered? "contained" :"outlined"
+    const signUpStyle = isHovered ? "contained" : "outlined"
 
     return (
         <>
-            <Box className=" flex flex-row ">
-                <div className="flex-1 w-3/5 h-2/3">
-                    <Typography variant="h4" className="text-center">LMS</Typography>
-                    <div className="w-2/4 h-2/5 m-auto">
-
-                        <img src={img} alt="Avatar" sx={{ height: "200px" }} />
-                    </div>
+            <Box className=" flex flex-row">
+                <div className="flex-1 w-3/5 ">
+                    <img src={img} alt="Avatar" sx={{ width: "full", height: "full" }} />
                 </div>
                 <div className="w-2/5 p-10">
-
-                    <form className="bg-white rounded-xl p-5 w-auto">
+                    <form className="bg-white rounded-xl p-5 w-auto" autoComplete="off">
                         <div className="header m-4">
                             <Typography variant="h4" className="text-center font-bold ">Welcome to LMS</Typography>
                             <div className="text-center font-thin font-sans">
@@ -60,6 +57,8 @@ export function SignUp() {
                                                 <TextField
                                                     size="small"
                                                     label="Email"
+                                                    type="email"
+
 
                                                 ></TextField>
                                             </FormControl>
@@ -71,6 +70,7 @@ export function SignUp() {
                                                 <TextField
                                                     size="small"
                                                     label="Password"
+                                                    type="password"
 
                                                 ></TextField>
                                             </FormControl>
@@ -82,6 +82,7 @@ export function SignUp() {
                                                 <TextField
                                                     size="small"
                                                     label="Confirm Password"
+                                                    type="password"
                                                     fullWidth
                                                 ></TextField>
                                             </FormControl>
@@ -89,10 +90,19 @@ export function SignUp() {
                                     </Grid>
 
                                     <Grid item xs={12}>
-                                    <div className="m-3 ">
-                                    <FormControl fullWidth >
-                                        <Button variant={signUpStyle} onMouseEnter={handleHovered} onMouseLeave={handleHovered} >Sign Up</Button>
-                                        </FormControl>
+                                        <div className="m-3 ">
+                                            <FormControl fullWidth >
+                                                <Button type="submit" variant={signUpStyle} onMouseEnter={handleHovered} onMouseLeave={handleHovered} >Sign Up</Button>
+                                            </FormControl>
+                                        </div>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <Divider sx={{ fontSize: "15px", color: "rgba(0, 0, 0, 0.12)" }}> Or</Divider>
+                                        <div className="social flex justify-center">
+
+                                            <FaFacebook size={30} color="#4267B2" className="m-2"></FaFacebook>
+                                            <FcGoogle size={30} className="m-2"></FcGoogle>
+                                            <FaTwitter size={30} color="#1DA1F2" className="m-2"></FaTwitter>
                                         </div>
                                     </Grid>
                                 </Grid>
