@@ -143,8 +143,9 @@ const modalStyle = {
                 onClose={handleModalOpen}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
+               
             >
-                <Box sx={modalStyle}>
+                <Box sx={modalStyle}  className='rounded-2xl'>
                     <Typography id="modal-modal-title" variant="h6" component="h2" sx={{padding:`20px`,textAlign:`center`}}>
                         Are you sure,<br/> you want to log out?
                     </Typography>

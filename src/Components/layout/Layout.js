@@ -2,9 +2,11 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Sidebar from './Sidebar';
 import Footer from '../footer/Footer';
-import { AppBar, Avatar, Button, Toolbar, Typography } from '@mui/material';
+import { AppBar, Avatar, Badge, Button, Toolbar, Typography } from '@mui/material';
 import { IoMdNotificationsOutline } from 'react-icons/io'
+import { useState } from 'react';
 export default function Layout({ children }) {
+ 
 
     return (
         <Box sx={{ display: 'flex' }}>
@@ -14,10 +16,13 @@ export default function Layout({ children }) {
                         LMS
                     </Typography>
                     <div className='flex '>
-                        <div className='py-5 pr-2 '>
+                    <button className="py-2 px-3   focus:outline-none">
+                            <Badge badgeContent={5} color="error">
 
-                            <IoMdNotificationsOutline size={25}></IoMdNotificationsOutline>
-                        </div>
+                                <IoMdNotificationsOutline className='hover:bg-blue-400 rounded-full'  size={25}></IoMdNotificationsOutline>
+                            </Badge>
+
+                        </button >
                         <div className='pt-1' >
                             <Button>
 
