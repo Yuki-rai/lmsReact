@@ -5,6 +5,8 @@ import Footer from '../footer/Footer';
 import { AppBar, Avatar, Badge, Button, Toolbar, Typography } from '@mui/material';
 import { IoMdNotificationsOutline } from 'react-icons/io'
 import { useState } from 'react';
+import ava from '../../assests/img/ava.jpg'
+
 export default function Layout({ children }) {
  
 
@@ -26,7 +28,7 @@ export default function Layout({ children }) {
                         <div className='pt-1' >
                             <Button>
 
-                                <Avatar ></Avatar>
+                                <Avatar src={ava}></Avatar>
                             </Button>
                         </div>
 

@@ -19,6 +19,8 @@ import EditStudent from "./Pages/Student/Edit";
 import EditBook from "./Pages/Book/Edit";
 import EditCategory from "./Pages/Category/Edit";
 import { SignUp } from "./Pages/auth/signUp";
+import UserList from "./Pages/UserList/UserList";
+import CreateUser from "./Pages/UserList/Create";
 
 
 export default function Gateway() {
@@ -28,6 +30,10 @@ export default function Gateway() {
             <Route path="/SignUp" element={<SignUp />} />
             <Route element={<PrivateRoute />}>
                 <Route path="/" element={<Home />} />
+                {/* SetUser */}
+                <Route exact path="/UserList" element={<UserList />} />
+                <Route exact path="/UserList/Create" element={<CreateUser />} />
+
                 {/* Faculty */}
                 <Route exact path="/Faculty" element={<Faculty />} />
                 <Route exact path="/Faculty/Create" element={<CreateFaculty />} />
