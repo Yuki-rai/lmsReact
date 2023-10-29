@@ -6,33 +6,41 @@ import { SInputField } from '../../Components/styles/Styles';
 import { IoIosArrowRoundBack } from 'react-icons/io'
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { createStudentService } from '../../Services/apiServices/student/studentService';
 import { toast } from 'react-toastify';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useEffect, useState } from 'react';
-import { facultyService } from '../../Services/apiServices/faculty/facultyServices';
-import { genderService } from '../../Services/apiServices/common/gender/genderService';
-import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup';
+import { roleService } from '../../Services/apiServices/common/role/roleService';
+import { SignUpService, signUp } from '../../Services/apiServices/auth/signUpService';
 
 export default function CreateUser() {
-    const schema = yup
-        .object()
-        .shape({
-            firstName:yup.string().required("This field is required")
-        });
+    // const schema = yup
+    //     .object()
+    //     .shape({
+    //         firstName:yup.string().required("This field is required")
+    //     });
 
     const { register, handleSubmit, formState: { errors, isSubmitting }, setValue } = useForm({
-        resolver: yupResolver(schema),
+       
         defaultValues: {
             firstName: '',
             lastName: '',
             email: '',
             password: '',
             confirmPassword: '',
+            role:'',
 
         }
     });
+
+    //For Role Selectlist
+    const [roleList,SetRoleList] = useState([]);
+    useEffect(()=>{
+        let abc = roleService().then((response)=>{
+            SetRoleList(response.data)
+        })
+
+        
+    },[])
 
     const [initialValue, setInitialValue] = useState({
         firstName: '',
@@ -40,6 +48,7 @@ export default function CreateUser() {
         email: '',
         password: '',
         confirmPassword: '',
+        role:''
     })
 
     const handleChange = (e) => {
@@ -48,20 +57,18 @@ export default function CreateUser() {
             ...initialValue,
             [name]: value
         })
-
-
     }
     const navigate = useNavigate();
 
     const onSubmit = async (data) => {
         try {
             if (isSubmitting) return;
-            const response = await createStudentService(data);
+            const response = await signUp(data);
             if (response.status === true) {
                 toast.success(response.message, {
                     autoclose: 1000,
                 })
-                navigate("/Student")
+                navigate("/UserList")
             } else if (response.status === false) {
                 toast.error(response.message, {
                     autoclose: 1000,
@@ -70,7 +77,7 @@ export default function CreateUser() {
 
         }
         catch (error) {
-            toast.error("Student Not Created !!", {
+            toast.error("Error Occured !!", {
                 autoClose: 3000
             })
         }
@@ -149,7 +156,27 @@ export default function CreateUser() {
                                     />
                                 </FormControl>
                             </SInputField>
-                            
+                            <SInputField>
+                                <FormControl fullWidth>
+                                    <InputLabel id="Role">Role</InputLabel>
+                                    <Select
+                                        required
+                                        labelId="Role"
+                                        id="role-select"
+                                        label="Role"
+                                        {...register("role")}
+                                        value={initialValue.role}
+                                        onChange={handleChange}
+
+                                    >
+                                        {roleList.map((item, index) => (
+                                            <MenuItem key={index} value={item.name}>
+                                                {item.name}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+                            </SInputField>
                          
                            
                         </FormGroup>

@@ -19,7 +19,7 @@ import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Button, Collapse, Modal } from '@mui/material';
 import { useDispatch } from 'react-redux';
-import { logout } from '../../redux/userDetail';
+import { logout } from '../../../redux/userDetail';
 
 const drawerWidth = 240;
 function Sidebar(props) {

@@ -7,12 +7,11 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import { Box, Button, Grid, Modal, Toolbar, Typography } from '@mui/material';
-import { FaTrash } from 'react-icons/fa'
-import { BsPencilSquare } from 'react-icons/bs'
+import {  Button ,Switch, Toolbar, Typography } from '@mui/material';
+
 import { Link } from 'react-router-dom';
-import { deleteBookService, bookService } from '../../Services/apiServices/book/bookServices';
 import { toast } from 'react-toastify';
+import { UserListSerivce } from '../../Services/apiServices/common/commonServices';
 
 
 
@@ -20,75 +19,30 @@ export default function UserList() {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [apiData, setApiData] = useState([]);
-    const [open, setOpen] = useState(false);
-    const [id, setId] = useState(0);
-    const [change, setChange] = useState(false);
 
-    const handleClick = (id) => {
-        setId(id);
-        handleOpen();
-    }
+    
 
-    const handleSubmit = () => {
-        deleteBookService(id)
-            .then((response) => {
-                if (response.status) {
-                    toast.success("Deleted Sucessfully", {
-                        autoClose: 2000
-                    })
-                    handleOpen()
-                    setChange(!change)
-
-                }
-                else {
-                    toast.error("Error while Deleting", {
-                        autoClose: 2000
-                    })
-                }
-            })
-
-
-    }
-
-    const handleOpen = () => {
-        setOpen(!open);
-    }
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
-
-    const style = {
-        display: 'flex',
-        flexDirection: 'column',
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: "auto",
-        height: "auto",
-        bgcolor: 'background.paper',
-        border: '1px solid silver',
-        outline: "none",
-        borderRadius: '10px',
-        padding: "30px"
-    };
-
 
     const handleChangeRowsPerPage = (event) => {
         setRowsPerPage(+event.target.value);
         setPage(0);
     };
 
-    //Fetch Book 
+
+
+    //Fetch Users 
     useEffect(() => {
         const fetchedData = () => {
-            bookService().then(({ status, data }) => {
+            UserListSerivce().then(({ status, data }) => {
                 try {
                     if (status) {
                         setApiData(data);
                     }
-                    else{
+                    else {
                         setApiData([]);
                     }
                 }
@@ -97,7 +51,7 @@ export default function UserList() {
             })
         }
         fetchedData()
-    }, [change,apiData])
+    }, [apiData])
 
     return (<>
         <Toolbar sx={{ flexDirection: `row`, borderRadius: '20px', justifyContent: "space-between", padding: '10px', alignItems: 'flex-start', background: 'white', marginBottom: '10px' }}>
@@ -109,41 +63,23 @@ export default function UserList() {
 
             </Link>
         </Toolbar >
-        <Modal open={open}
-            onClose={handleOpen}>
-            <Box sx={style}>
-                <Typography id="modal-modal-title" variant="h5" component="h6" sx={{ marginBottom: "15px" }}>
-                    Are you sure ?
-                </Typography>
-                <Grid container direction="row-reverse">
-                    <Grid item>
-                        <Button variant="outlined" color="error" onClick={handleOpen}>
-                            Cancel
-                        </Button>
-                    </Grid>
-                    <Grid item sx={{ mr: '5px' }}>
 
-
-                        <Button variant="contained" color="error" onClick={ handleSubmit}>
-                            Delete
-                        </Button>
-
-                    </Grid>
-
-
-                </Grid>
-            </Box>
-        </Modal>
         <Paper sx={{ width: '100%', overflow: 'hidden', borderRadius: '20px' }}>
             <TableContainer sx={{ maxHeight: 440 }}>
                 <Table stickyHeader aria-label="sticky table">
                     <TableHead>
                         <TableRow>
                             <TableCell >
-                                Id
+                                S.N
                             </TableCell>
                             <TableCell>
                                 Name
+                            </TableCell>
+                            <TableCell>
+                                Email
+                            </TableCell>
+                            <TableCell>
+                                Role
                             </TableCell>
 
 
@@ -153,26 +89,23 @@ export default function UserList() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {apiData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item) => {
+                        {apiData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item, index) => {
                             return (
                                 <TableRow hover key={item.id}>
                                     <TableCell>
-                                        {(item?.id)}
+                                        {(index + 1)}
                                     </TableCell>
                                     <TableCell>
-                                        {item?.name}
+                                        {item?.firstName} {item?.lastName}
                                     </TableCell>
-
-
                                     <TableCell>
-                                        <Link to={`/Book/Edit/${item?.id}`}>
-                                            <Button sx={{ margin: "4px" }} variant="contained" >
-                                                <BsPencilSquare></BsPencilSquare>
-                                            </Button>
-                                        </Link>
-                                        <Button variant="contained" color="error" onClick={() => handleClick( item?.id)}>
-                                            <FaTrash></FaTrash>
-                                        </Button>
+                                        {item?.email}
+                                    </TableCell>
+                                    <TableCell>
+                                        {item?.role}
+                                    </TableCell>
+                                    <TableCell>
+                                       {item?.role ==="Administrator"?<Switch defaultChecked color='success' disabled ></Switch>:<Switch checked={item?.active}></Switch>}
                                     </TableCell>
                                 </TableRow>
                             )

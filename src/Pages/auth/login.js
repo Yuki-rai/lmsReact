@@ -23,7 +23,7 @@ export default function Login() {
         loginUser(data).then((response) => {
             if (response.status === true) {
                 dispatch(setUserDetail(response));
-                toast.success(`${response.data.name} Loggedin Successfully`, {
+                toast.success(`${response.data.name} Logged in Successfully`, {
                     icon: "🚀",
                     autoClose: 2000,
                     position: 'top-right',

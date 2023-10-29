@@ -4,8 +4,13 @@ const apiUrls = {
             method: "POST",
             url: "/Login"
 
+        },
+        signUp:{
+            method:"POST",
+            url:"/SignUp"
         }
     },
+
 
 
     faculty: {
@@ -131,6 +136,14 @@ const apiUrls = {
                 method: "GET",
                 url: "/GetGender"
             }
+        },
+        role:{
+            method:"GET",
+            url:"/GetRoles"
+        },
+        userList:{
+            method:"GET",
+            url:"/GetAllUser"
         }
     },
     dashboard: {

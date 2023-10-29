@@ -21,6 +21,15 @@ export const authApi = async (method, url, data) => {
     return response.data;
 }
 
+export const signUpApi = async(method,url,data)=>{
+    let response = await axios({
+        method,
+        url:`${baseUrl}${url}`,
+        data
+    });
+    return response.data;
+}
+
 export const facultyApi = async (method, url, data) => {
     const token = store.getState();
     let response = await axios({
