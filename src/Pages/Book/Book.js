@@ -97,7 +97,7 @@ export default function Book() {
             })
         }
         fetchedData()
-    }, [change,apiData])
+    }, [change])
 
     return (<>
         <Toolbar sx={{ flexDirection: `row`, borderRadius: '20px', justifyContent: "space-between", padding: '10px', alignItems: 'flex-start', background: 'white', marginBottom: '10px' }}>

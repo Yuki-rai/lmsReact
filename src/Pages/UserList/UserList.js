@@ -7,7 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import {  Button ,Switch, Toolbar, Typography } from '@mui/material';
+import { Box, Button, Grid, Modal, Switch, Toolbar, Typography } from '@mui/material';
 
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -19,9 +19,23 @@ export default function UserList() {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [apiData, setApiData] = useState([]);
+    const [modalOpen, setModalOpen] = useState(false);
 
-    
-
+    const style = {
+        display: 'flex',
+        flexDirection: 'column',
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: "auto",
+        height: "auto",
+        bgcolor: 'background.paper',
+        border: '1px solid silver',
+        outline: "none",
+        borderRadius: '10px',
+        padding: "30px"
+    };
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -33,6 +47,16 @@ export default function UserList() {
     };
 
 
+    const handleModalOpen = () => {
+        setModalOpen(!modalOpen);
+    }
+    const handleSubmit = (e) => {
+        setModalOpen(!modalOpen)
+        toast.success(e, {
+            autoClose: 5000
+        })
+
+    }
 
     //Fetch Users 
     useEffect(() => {
@@ -51,7 +75,7 @@ export default function UserList() {
             })
         }
         fetchedData()
-    }, [apiData])
+    }, [])
 
     return (<>
         <Toolbar sx={{ flexDirection: `row`, borderRadius: '20px', justifyContent: "space-between", padding: '10px', alignItems: 'flex-start', background: 'white', marginBottom: '10px' }}>
@@ -63,6 +87,27 @@ export default function UserList() {
 
             </Link>
         </Toolbar >
+        <Modal open={modalOpen}
+            onClose={handleModalOpen}>
+            <Box sx={style}>
+                <Typography id="modal-modal-title" variant="h5" component="h6" sx={{ marginBottom: "15px" }}>
+                    Are you sure ?
+                </Typography>
+                <Grid container direction="row-reverse">
+                    <Grid item>
+                        <Button variant="outlined" color="error" onClick={handleModalOpen}>
+                            Cancel
+                        </Button>
+                    </Grid>
+                    <Grid item sx={{ mr: '5px' }}>
+                        <Button variant="contained" color="success" onClick={(e) => { handleSubmit("asd") }} > Update
+                        </Button>
+                    </Grid>
+
+
+                </Grid>
+            </Box>
+        </Modal>
 
         <Paper sx={{ width: '100%', overflow: 'hidden', borderRadius: '20px' }}>
             <TableContainer sx={{ maxHeight: 440 }}>
@@ -105,7 +150,7 @@ export default function UserList() {
                                         {item?.role}
                                     </TableCell>
                                     <TableCell>
-                                       {item?.role ==="Administrator"?<Switch defaultChecked color='success' disabled ></Switch>:<Switch checked={item?.active}></Switch>}
+                                        {item?.role === "Administrator" ? <Switch defaultChecked color='success' disabled ></Switch> : <Switch onChange={handleModalOpen} checked={item?.active}></Switch>}
                                     </TableCell>
                                 </TableRow>
                             )

@@ -6,19 +6,34 @@ import { Button, FormControl, FormGroup, InputLabel, MenuItem, Select, Stack, Te
 import { SInputField } from '../../Components/styles/Styles';
 import { IoIosArrowRoundBack } from 'react-icons/io'
 import { Link, useNavigate } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { createBookService } from '../../Services/apiServices/book/bookServices';
 import { toast } from 'react-toastify';
 import { useState, useEffect } from 'react';
 import { categoryService } from '../../Services/apiServices/category/categoryServices';
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+const schema = yup.object({
+    name: yup.string().required("This field is required"),
+    authorName: yup.string().required("This field is required"),
+
+})
+
 
 export default function CreateBook() {
-    const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm();
+    const { register, control, handleSubmit, formState: { errors, isSubmitting } } = useForm({
+        resolver: yupResolver(schema),
+        defaultValues: {
+            name: '',   
+            authorName: ''
+        }
+    });
+
     const navigate = useNavigate();
 
-    const [categoryList, setCategoryList] = useState([]);
-
     // Category List
+    const [categoryList, setCategoryList] = useState([]);
     useEffect(() => {
         let categoryData = () => {
             categoryService().then((response) => {
@@ -33,10 +48,13 @@ export default function CreateBook() {
         categoryData();
     }, [])
 
+    const handleSelectChange = (event)=>{
+        setCategoryList(event.target.value)
+    }
+
     //Post Form
     const onSubmit = async (data) => {
         try {
-            console.log(categoryList);
             if (isSubmitting) return;
             const response = await createBookService(data);
             if (response.status === true) {
@@ -67,9 +85,10 @@ export default function CreateBook() {
                             <SInputField>
                                 <FormControl>
                                     <TextField
-                                        required
                                         label="Name"
-                                        {...register('name', { required: true })}
+                                        {...register('name')}
+                                        error={errors?.name}
+                                        helperText={errors?.name?.message}
                                     />
                                 </FormControl>
                             </SInputField>
@@ -77,12 +96,14 @@ export default function CreateBook() {
                             <SInputField>
                                 <FormControl>
                                     <TextField
-                                        required
                                         label="Author Name"
-                                        {...register('authorName', { required: true })}
+                                        {...register('authorName')}
+                                        error={errors?.authorName}
+                                        helperText={errors?.authorName?.message}
                                     />
                                 </FormControl>
                             </SInputField>
+
                             <SInputField>
                                 <FormControl fullWidth>
                                     <InputLabel id="category">Category</InputLabel>
@@ -90,7 +111,10 @@ export default function CreateBook() {
                                         labelId="category"
                                         id="category-select"
                                         label="Category"
-                                        {...register("categoryId")}
+                                        size='small'
+                                        multiple
+                                        value={categoryList}
+                                        onChange={handleSelectChange}
                                     >
                                         {categoryList.map((item, index) => (
                                             <MenuItem key={index} value={item.id}>
@@ -98,9 +122,12 @@ export default function CreateBook() {
                                             </MenuItem>
                                         ))}
                                     </Select>
+
                                 </FormControl>
                             </SInputField>
-                           
+
+
+
                         </FormGroup>
 
                         <Stack direction="row" spacing={2} sx={{ margin: `20px 20px 20px 5px` }}>
