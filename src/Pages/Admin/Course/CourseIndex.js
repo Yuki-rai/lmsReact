@@ -7,16 +7,13 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import { Box, Button, Grid, Modal, Toolbar, Typography } from '@mui/material';
+import { Box, Button, Checkbox, Grid, Modal, Toolbar, Typography } from '@mui/material';
 import { FaTrash } from 'react-icons/fa'
 import { BsPencilSquare } from 'react-icons/bs'
 import { Link } from 'react-router-dom';
-import { deleteBookService, bookService } from '../../Services/apiServices/book/bookServices';
+import { deleteCourseService, courseService } from '../../../Services/apiServices/course/courseServices';
 import { toast } from 'react-toastify';
-
-
-
-export default function Book() {
+export default function CourseIndex() {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [apiData, setApiData] = useState([]);
@@ -25,12 +22,14 @@ export default function Book() {
     const [change, setChange] = useState(false);
 
     const handleClick = (id) => {
+        debugger
         setId(id);
         handleOpen();
     }
 
     const handleSubmit = () => {
-        deleteBookService(id)
+        debugger
+        deleteCourseService(id)
             .then((response) => {
                 if (response.status) {
                     toast.success("Deleted Sucessfully", {
@@ -80,15 +79,15 @@ export default function Book() {
         setPage(0);
     };
 
-    //Fetch Book 
+    //Fetch Course 
     useEffect(() => {
         const fetchedData = () => {
-            bookService().then(({ status, data }) => {
+            courseService().then(({ status, data }) => {
                 try {
                     if (status) {
                         setApiData(data);
                     }
-                    else{
+                    else {
                         setApiData([]);
                     }
                 }
@@ -101,8 +100,8 @@ export default function Book() {
 
     return (<>
         <Toolbar sx={{ flexDirection: `row`, borderRadius: '20px', justifyContent: "space-between", padding: '10px', alignItems: 'flex-start', background: 'white', marginBottom: '10px' }}>
-            <Typography variant='h5' >Book</Typography>
-            <Link to={"/Book/Create"}>
+            <Typography variant='h5' >Course</Typography>
+            <Link to={"/Course/Create"}>
                 <Button variant="contained" color="success" sx={{ marginBottom: `20px` }}>
                     Add
                 </Button>
@@ -124,7 +123,7 @@ export default function Book() {
                     <Grid item sx={{ mr: '5px' }}>
 
 
-                        <Button variant="contained" color="error" onClick={ handleSubmit}>
+                        <Button variant="contained" color="error" onClick={handleSubmit}>
                             Delete
                         </Button>
 
@@ -136,14 +135,17 @@ export default function Book() {
         </Modal>
         <Paper sx={{ width: '100%', overflow: 'hidden', borderRadius: '20px' }}>
             <TableContainer sx={{ maxHeight: 440 }}>
-                <Table stickyHeader aria-label="sticky table">
+                <Table  >
                     <TableHead>
                         <TableRow>
                             <TableCell >
-                                Id
+                                Course Id
                             </TableCell>
                             <TableCell>
                                 Name
+                            </TableCell>
+                            <TableCell>
+                                Credits
                             </TableCell>
 
 
@@ -160,18 +162,21 @@ export default function Book() {
                                         {(item?.id)}
                                     </TableCell>
                                     <TableCell>
-                                        {item?.name}
+                                        {item?.courseName}
+                                    </TableCell>
+                                    <TableCell>
+                                        {item?.credits}
                                     </TableCell>
 
 
                                     <TableCell>
-                                        <Link to={`/Book/Edit/${item?.id}`}>
+                                        <Link to={`/Course/Edit/${item?.id}`}>
                                             <Button sx={{ margin: "4px" }} variant="contained" >
-                                                <BsPencilSquare></BsPencilSquare>
+                                                <BsPencilSquare title='Edit'></BsPencilSquare>
                                             </Button>
                                         </Link>
-                                        <Button variant="contained" color="error" onClick={() => handleClick( item?.id)}>
-                                            <FaTrash></FaTrash>
+                                        <Button variant="contained" color="error" onClick={() => handleClick(item?.id)}>
+                                            <FaTrash title='Delete'></FaTrash>
                                         </Button>
                                     </TableCell>
                                 </TableRow>

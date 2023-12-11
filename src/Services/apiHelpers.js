@@ -3,11 +3,11 @@ import { store } from '../redux/store'
 const baseUrl = "https://localhost:7098/api";
 
 export const urls = {
-    facultyUrl: `${baseUrl}/Admin/Faculty`,
+    courseUrl: `${baseUrl}/Admin/Course`,
     studentUrl: `${baseUrl}/Admin/Student`,
     categoryUrl: `${baseUrl}/Admin/Category`,
     bookUrl: `${baseUrl}/Admin/Book`,
-    issueBookUrl: `${baseUrl}/Admin/IssueBook`,
+    transactionUrl: `${baseUrl}/Admin/Transaction`,
     commonUrl: `${baseUrl}/Common`,
     dashboardUrl: `${baseUrl}/Dashboard`
 }
@@ -30,11 +30,11 @@ export const signUpApi = async(method,url,data)=>{
     return response.data;
 }
 
-export const facultyApi = async (method, url, data) => {
+export const courseApi = async (method, url, data) => {
     const token = store.getState();
     let response = await axios({
         method,
-        url: `${urls.facultyUrl}${url}`,
+        url: `${urls.courseUrl}${url}`,
         data,
         headers: {
             Authorization: `Bearer ${token.userDetail.user?.data?.token}`,
@@ -43,11 +43,11 @@ export const facultyApi = async (method, url, data) => {
     return response.data;
 }
 
-export const issueBookApi = async (method, url, data) => {
+export const transactionApi = async (method, url, data) => {
     const token = store.getState();
     let response = await axios({
         method,
-        url: `${urls.issueBookUrl}${url}`,
+        url: `${urls.transactionUrl}${url}`,
         data,
         headers: {
             Authorization: `Bearer ${token.userDetail.user?.data?.token}`,

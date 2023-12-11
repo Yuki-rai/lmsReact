@@ -1,58 +1,101 @@
 import * as React from 'react';
+import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import { Button, FormControl, FormGroup, InputLabel, MenuItem, Select, Stack, TextField } from '@mui/material';
-import { SInputField } from '../../Components/styles/Styles';
+import { SInputField } from '../../../Components/styles/Styles';
 import { IoIosArrowRoundBack } from 'react-icons/io'
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { createStudentService } from '../../Services/apiServices/student/studentService';
 import { toast } from 'react-toastify';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { useEffect, useState } from 'react';
-import { facultyService } from '../../Services/apiServices/faculty/facultyServices';
-import { genderService } from '../../Services/apiServices/common/gender/genderService';
-export default function CreateStudent() {
-    const { register, handleSubmit, formState: { errors, isSubmitting }, setValue } = useForm({
-        defaultValues:{
-            firstName:'',
-            lastName:'',
-            birthDate:'',
-            facultyId:0,
-            genderId:0
-            
+import { useState, useEffect } from 'react';
+import { editStudentService, studentByIdService } from '../../../Services/apiServices/student/studentService';
+import dayjs from 'dayjs';
+import { DatePicker } from '@mui/x-date-pickers';
+import { courseService } from '../../../Services/apiServices/course/courseServices';
+import { genderService } from '../../../Services/apiServices/common/gender/genderService';
+
+export default function EditStudent() {
+    const { register, handleSubmit, formState: { errors, isSubmitting }, setValue } = useForm();
+    const navigate = useNavigate();
+    const [apiData, setApiData] = useState([])
+
+    //Fetch by Id
+    const { id } = useParams();
+    useEffect(() => {
+        let fetchData = async () => {
+            await studentByIdService(id)
+                .then((response) => {
+                    setApiData(response.data);
+                })
         }
+        fetchData()
+    }, [])
+
+    //Faculty List Fetch
+    const[facultyList,setFacultyList] = useState([])
+    useEffect(()=>{
+        let facultyData =()=>{
+            courseService().then((response)=>{
+                setFacultyList(response.data)
+            })
+        }
+        facultyData()
+    },[apiData])
+
+
+    //Gender list Fetch
+    const [genderList,setGenderList] = useState([])
+    useEffect(()=>{
+        let genderData =()=>{
+            genderService().then((response)=>{
+                setGenderList(response.data)
+            })
+        }
+        genderData()
+    },[apiData])
+
+
+    // to set the incoming value to the respective fields
+    const [initialValue, setInitialValue] = useState({
+        id: 0,
+        firstName: "",
+        lastName:"",
+        birthDate:"",
+        facultyId:0,
+        genderId:0
     });
 
-    const [initialValue, setInitialValue] = useState({
-        firstName: '',
-        lastName: '',
-        birthDate: '',
-        facultyId: '',
-        genderId: ''
-    })
-
-    const handleChange=(e)=>{
-        const {name,value}= e.target;
+    useEffect(() => {
         setInitialValue({
-            ...initialValue,
-            [name]:value
-        })
-        
-        
-    }
-    const navigate = useNavigate();
-    const [facultyList, setFacultyList] = useState([]);
-    const [genderList, setGenderList] = useState([]);
+            id: apiData?.id,
+            firstName: apiData?.firstName || "",
+            lastName:apiData?.lastName || "",
+            birthDate:apiData?.birthDate || "",
+            facultyId:apiData?.facultyId || "",
+            genderId:apiData?.genderId || "",
+        });
+    }, [apiData]);
+    useEffect(() => {
+        // Use setValue to set values for each input field
+        setValue("id", initialValue.id)
+        setValue("firstName", initialValue.firstName);
+        setValue("lastName", initialValue.lastName);
+        setValue("genderId", initialValue.genderId);
+        setValue("facultyId", initialValue.facultyId);
+    }, [initialValue]);
+
+
     const handleBirthDate = (data) => (
         setValue("birthDate", data)
 
     )
+
     const onSubmit = async (data) => {
         try {
-            debugger
+            debugger;
             if (isSubmitting) return;
-            const response = await createStudentService(data);
+            const response = await editStudentService(data);
             if (response.status === true) {
                 toast.success(response.message, {
                     autoclose: 1000,
@@ -66,39 +109,15 @@ export default function CreateStudent() {
 
         }
         catch (error) {
-            toast.error("Student Not Created !!", {
-                autoClose: 3000
-            })
+            toast.error(error.message)
         }
-
 
     }
-
-    //Fetch Faculty List
-    useEffect(() => {
-        let facultyData = () => {
-            facultyService().then((response) => {
-                setFacultyList(response.data)
-            })
-        }
-        facultyData()
-    }, [])
-
-    //Fetch Gender List
-    useEffect(() => {
-        let genderData = () => {
-            genderService().then((response) => {
-                setGenderList(response.data)
-            })
-        }
-        genderData()
-    }, [])
-
-
     return (
         <>
+            <CssBaseline />
             <Container maxWidth="xl">
-                <h2>Add Student</h2>
+                <h2>Edit</h2>
                 <Box sx={{ bgcolor: 'white', padding: '10px', marginTop: '15px', borderRadius: '20px' }}>
                     <Box component="form" sx={{ padding: `10px` }} onSubmit={handleSubmit(onSubmit)} >
                         <FormGroup sx={{ display: `flex`, flexDirection: `row` }}>
@@ -107,71 +126,75 @@ export default function CreateStudent() {
                                     <TextField
                                         required
                                         label="First Name"
-                                        value={initialValue.firstName}
                                         {...register('firstName', { required: true })}
-                                        onChange={handleChange}
+                                        value={initialValue.firstName}
+                                        onChange={(e) => setInitialValue({ ...initialValue, firstName: e.target.value })}
                                     />
                                 </FormControl>
                             </SInputField>
+
+
                             <SInputField>
                                 <FormControl>
                                     <TextField
                                         label="Last Name"
-                                        value={initialValue.lastName}
                                         {...register('lastName')}
-                                        onChange={handleChange}
-
+                                        value={initialValue.lastName}
+                                        onChange={(e) => setInitialValue({ ...initialValue, lastName: e.target.value })}
                                     />
                                 </FormControl>
                             </SInputField>
+
                             <SInputField>
                                 <DatePicker
-                                    isRequired='true'
                                     label='Birth Date'
-                                    disableFuture
                                     format='YYYY-MM-DD'
+                                    name="birthDate"
                                     onChange={handleBirthDate}
+                                    value={initialValue?.birthDate ? dayjs(initialValue?.birthDate) : dayjs()}
                                 />
                             </SInputField>
+
+
                             <SInputField>
                                 <FormControl fullWidth>
                                     <InputLabel id="faculty">Faculty</InputLabel>
                                     <Select
-                                        required
                                         labelId="faculty"
                                         id="faculty-select"
                                         label="Faculty"
                                         {...register("facultyId")}
                                         value={initialValue.facultyId}
-                                        onChange={handleChange}
-
+                                        onChange={(e)=>setInitialValue({...initialValue,facultyId:e.target.value})}
                                     >
                                         {facultyList.map((item, index) => (
                                             <MenuItem key={index} value={item.id}>
                                                 {item.name}
                                             </MenuItem>
                                         ))}
+
                                     </Select>
                                 </FormControl>
                             </SInputField>
+
 
                             <SInputField>
                                 <FormControl fullWidth>
                                     <InputLabel id="gender">Gender</InputLabel>
                                     <Select
-                                        required
                                         labelId="gender"
                                         id="gender-select"
                                         label="Gender"
                                         {...register("genderId")}
                                         value={initialValue.genderId}
-                                        onChange={handleChange}
+                                        onChange={(e)=>setInitialValue({...initialValue,genderId:e.target.value})}
                                     >
                                         {genderList.map((item, index) => (
                                             <MenuItem key={index} value={item.id}>
                                                 {item.name}
                                             </MenuItem>
                                         ))}
+
                                     </Select>
                                 </FormControl>
                             </SInputField>

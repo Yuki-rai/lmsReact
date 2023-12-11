@@ -7,13 +7,13 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import { Box, Button, Checkbox, Grid, Modal, Toolbar, Typography } from '@mui/material';
+import { Box, Button, Grid, Modal, Toolbar, Typography } from '@mui/material';
+import {categoryService,deleteCategoryService} from '../../../Services/apiServices/category/categoryServices';
 import { FaTrash } from 'react-icons/fa'
 import { BsPencilSquare } from 'react-icons/bs'
 import { Link } from 'react-router-dom';
-import { deleteFacultyService, facultyService } from '../../Services/apiServices/faculty/facultyServices';
 import { toast } from 'react-toastify';
-export default function Faculty() {
+export default function Category() {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [apiData, setApiData] = useState([]);
@@ -29,7 +29,7 @@ export default function Faculty() {
 
     const handleSubmit = () => {
         debugger
-        deleteFacultyService(id)
+        deleteCategoryService(id)
             .then((response) => {
                 if (response.status) {
                     toast.success("Deleted Sucessfully", {
@@ -79,10 +79,10 @@ export default function Faculty() {
         setPage(0);
     };
 
-    //Fetch Faculty 
+    //Fetch Category 
     useEffect(() => {
         const fetchedData = () => {
-            facultyService().then(({ status, data }) => {
+            categoryService().then(({ status, data }) => {
                 try {
                     if (status) {
                         setApiData(data);
@@ -100,8 +100,8 @@ export default function Faculty() {
 
     return (<>
         <Toolbar sx={{ flexDirection: `row`, borderRadius: '20px', justifyContent: "space-between", padding: '10px', alignItems: 'flex-start', background: 'white', marginBottom: '10px' }}>
-            <Typography variant='h5' >Faculty</Typography>
-            <Link to={"/Faculty/Create"}>
+            <Typography variant='h5' >Category</Typography>
+            <Link to={"/Category/Create"}>
                 <Button variant="contained" color="success" sx={{ marginBottom: `20px` }}>
                     Add
                 </Button>
@@ -164,7 +164,7 @@ export default function Faculty() {
 
 
                                     <TableCell>
-                                        <Link to={`/Faculty/Edit/${item?.id}`}>
+                                        <Link to={`/Category/Edit/${item?.id}`}>
                                             <Button sx={{ margin: "4px" }} variant="contained" >
                                                 <BsPencilSquare></BsPencilSquare>
                                             </Button>

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Sidebar from './Sidebar';
-import Footer from '../../footer/Footer';
 import { AppBar, Avatar, Badge, Button, Collapse, Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography } from '@mui/material';
 import { IoMdNotificationsOutline } from 'react-icons/io'
 import { useState } from 'react';

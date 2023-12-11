@@ -3,18 +3,18 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import { Button, FormControl, FormGroup, InputLabel, MenuItem, Select, Stack, TextField } from '@mui/material';
-import { SInputField } from '../../Components/styles/Styles';
+import { SInputField } from '../../../Components/styles/Styles';
 import { IoIosArrowRoundBack } from 'react-icons/io'
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { createIssueBookService } from '../../Services/apiServices/issueBook/issueBookServices';
+import { createTransactionService } from '../../../Services/apiServices/transaction/transactionServices';
 import { toast } from 'react-toastify';
 import { useState, useEffect } from 'react';
-import { bookService } from '../../Services/apiServices/book/bookServices';
-import { studentService } from '../../Services/apiServices/student/studentService';
+import { bookService } from '../../../Services/apiServices/book/bookServices';
+import { studentService } from '../../../Services/apiServices/student/studentService';
 import { DatePicker } from '@mui/x-date-pickers';
 
-export default function CreateIssueBook() {
+export default function CreateTransaction() {
     const { register, handleSubmit, formState: { errors, isSubmitting },setValue } = useForm();
     
     const navigate = useNavigate();
@@ -48,12 +48,12 @@ export default function CreateIssueBook() {
     const onSubmit = async (data) => {
         try {
             if (isSubmitting) return;
-            const response = await createIssueBookService(data);
+            const response = await createTransactionService(data);
             if (response.status === true) {
                 toast.success(response.message, {
                     autoclose: 1000,
                 })
-                navigate("/IssueBook")
+                navigate("/Transaction")
             } else if (response.status === false) {
                 toast.error(response.message, {
                     autoclose: 1000,
@@ -70,7 +70,7 @@ export default function CreateIssueBook() {
         <>
             <CssBaseline />
             <Container maxWidth="xl">
-                <h2>Add IssueBook</h2>
+                <h2>Add Transaction</h2>
                 <Box sx={{ bgcolor: 'white', padding: '10px', marginTop: '15px', borderRadius: '20px' }}>
                     <Box component="form" sx={{ padding: `10px` }} onSubmit={handleSubmit(onSubmit)} >
                         <FormGroup sx={{ display: `flex`, flexDirection: `row` }}>
@@ -128,7 +128,7 @@ export default function CreateIssueBook() {
                         </FormGroup>
 
                         <Stack direction="row" spacing={2} sx={{ margin: `20px 20px 20px 5px` }}>
-                            <Link to={"/IssueBook"}>
+                            <Link to={"/Transaction"}>
                                 <Button variant="outlined" color='error' endIcon={<IoIosArrowRoundBack />}>
                                     Back
                                 </Button>

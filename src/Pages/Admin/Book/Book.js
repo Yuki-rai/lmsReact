@@ -11,9 +11,12 @@ import { Box, Button, Grid, Modal, Toolbar, Typography } from '@mui/material';
 import { FaTrash } from 'react-icons/fa'
 import { BsPencilSquare } from 'react-icons/bs'
 import { Link } from 'react-router-dom';
-import { deleteStudentService, studentService } from '../../Services/apiServices/student/studentService';
+import { deleteBookService, bookService } from '../../../Services/apiServices/book/bookServices';
 import { toast } from 'react-toastify';
-export default function IssueBook() {
+
+
+
+export default function Book() {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [apiData, setApiData] = useState([]);
@@ -22,14 +25,12 @@ export default function IssueBook() {
     const [change, setChange] = useState(false);
 
     const handleClick = (id) => {
-        debugger
         setId(id);
         handleOpen();
     }
 
     const handleSubmit = () => {
-        debugger
-        deleteStudentService(id)
+        deleteBookService(id)
             .then((response) => {
                 if (response.status) {
                     toast.success("Deleted Sucessfully", {
@@ -79,10 +80,10 @@ export default function IssueBook() {
         setPage(0);
     };
 
-    //Fetch Student 
+    //Fetch Book 
     useEffect(() => {
         const fetchedData = () => {
-            studentService().then(({ status, data }) => {
+            bookService().then(({ status, data }) => {
                 try {
                     if (status) {
                         setApiData(data);
@@ -100,8 +101,8 @@ export default function IssueBook() {
 
     return (<>
         <Toolbar sx={{ flexDirection: `row`, borderRadius: '20px', justifyContent: "space-between", padding: '10px', alignItems: 'flex-start', background: 'white', marginBottom: '10px' }}>
-            <Typography variant='h5' >Student</Typography>
-            <Link to={"/Student/Create"}>
+            <Typography variant='h5' >Book</Typography>
+            <Link to={"/Book/Create"}>
                 <Button variant="contained" color="success" sx={{ marginBottom: `20px` }}>
                     Add
                 </Button>
@@ -159,12 +160,12 @@ export default function IssueBook() {
                                         {(item?.id)}
                                     </TableCell>
                                     <TableCell>
-                                        {item?.firstName} {item?.lastName}
+                                        {item?.name}
                                     </TableCell>
 
 
                                     <TableCell>
-                                        <Link to={`/Student/Edit/${item?.id}`}>
+                                        <Link to={`/Book/Edit/${item?.id}`}>
                                             <Button sx={{ margin: "4px" }} variant="contained" >
                                                 <BsPencilSquare></BsPencilSquare>
                                             </Button>

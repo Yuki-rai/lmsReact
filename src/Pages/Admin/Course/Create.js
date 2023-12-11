@@ -1,63 +1,42 @@
 import * as React from 'react';
-import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import { Button, FormControl, FormGroup, Stack, TextField } from '@mui/material';
-import { SInputField } from '../../Components/styles/Styles';
+import { Button, FormControl, FormGroup, FormHelperText, Stack, TextField, Toolbar, Typography } from '@mui/material';
+import { SInputField } from '../../../Components/styles/Styles';
 import { IoIosArrowRoundBack } from 'react-icons/io'
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { editFacultyService, facultyByIdService } from '../../Services/apiServices/faculty/facultyServices';
+import { createCourseService } from '../../../Services/apiServices/course/courseServices';
 import { toast } from 'react-toastify';
-import { useState, useEffect } from 'react';
-
-export default function EditFaculty() {
-    const { register, handleSubmit, formState: { errors, isSubmitting }, setValue } = useForm();
-    const navigate = useNavigate();
-    const [apiData, setApiData] = useState([])
-
-    //Fetch by Id
-    const { id } = useParams();
-    useEffect(() => {
-        let fetchData = async () => {
-            await facultyByIdService(id)
-                .then((response) => {
-                    setApiData(response.data);
-                })
-        }
-        fetchData()
-    }, [])
+import * as yup from 'yup'
+import { yupResolver } from '@hookform/resolvers/yup';
 
 
-    // to set the incoming value to the respective fields
-    const [initialValue, setInitialValue] = useState({
-        id: 0,
-        name: "",
+const schema = yup.object().shape({
+    courseName:yup.string().required("This field is required !"),
+    semester:yup.number().min(1,"Value should be greater or equal to 1").required("This field is required !"),
+    credits:yup.string().required("This field is required !"),
+    description:yup.string().required("This field is required !")
+
+})
+
+
+export default function CreateCourse() {
+    const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm({
+        resolver:yupResolver(schema)
     });
-
-    useEffect(() => {
-        setInitialValue({
-            id: apiData?.id,
-            name: apiData?.name || "",
-        });
-    }, [apiData]);
-    useEffect(() => {
-        // Use setValue to set values for each input field
-        setValue("id", initialValue.id)
-        setValue("name", initialValue.name);
-    }, [initialValue]);
-
-
+  
+    const navigate = useNavigate();
     const onSubmit = async (data) => {
         try {
             debugger;
             if (isSubmitting) return;
-            const response = await editFacultyService(data);
+            const response = await createCourseService(data);
             if (response.status === true) {
                 toast.success(response.message, {
                     autoclose: 1000,
                 })
-                navigate("/Faculty")
+                navigate("/Course")
             } else if (response.status === false) {
                 toast.error(response.message, {
                     autoclose: 1000,
@@ -72,27 +51,30 @@ export default function EditFaculty() {
     }
     return (
         <>
-            <CssBaseline />
+           
             <Container maxWidth="xl">
-                <h2>Edit</h2>
+            <Toolbar sx={{ flexDirection: `row`, borderRadius: '20px', justifyContent: "space-between", padding: '10px', alignItems: 'flex-start', background: 'white', marginBottom: '10px' }}>
+                <Typography variant='h5' >Add Course</Typography>
+               
+            </Toolbar >
                 <Box sx={{ bgcolor: 'white', padding: '10px', marginTop: '15px', borderRadius: '20px' }}>
                     <Box component="form" sx={{ padding: `10px` }} onSubmit={handleSubmit(onSubmit)} >
                         <FormGroup sx={{ display: `flex`, flexDirection: `row` }}>
                             <SInputField>
                                 <FormControl>
                                     <TextField
-                                        required
                                         label="Name"
-                                        {...register('name', { required: true })}
-                                        value={initialValue.name}
-                                        onChange={(e) => setInitialValue({ ...initialValue, name: e.target.value })}
+                                        {...register('courseName')}
+                                        error={errors?.courseName}    
+                                        helperText={errors?.courseName?.message}                                    
                                     />
+
                                 </FormControl>
                             </SInputField>
                         </FormGroup>
 
                         <Stack direction="row" spacing={2} sx={{ margin: `20px 20px 20px 5px` }}>
-                            <Link to={"/Faculty"}>
+                            <Link to={"/Course"}>
                                 <Button variant="outlined" color='error' endIcon={<IoIosArrowRoundBack />}>
                                     Back
                                 </Button>

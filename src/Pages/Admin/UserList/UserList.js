@@ -7,55 +7,19 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import { Box, Button, Grid, Modal, Toolbar, Typography } from '@mui/material';
-import { FaTrash } from 'react-icons/fa'
-import { BsPencilSquare } from 'react-icons/bs'
+import { Box, Button, Grid, Modal, Switch, Toolbar, Typography } from '@mui/material';
+
 import { Link } from 'react-router-dom';
-import { deleteCategoryService, categoryService } from '../../Services/apiServices/category/categoryServices';
 import { toast } from 'react-toastify';
-export default function Category() {
+import { UserListSerivce } from '../../../Services/apiServices/common/commonServices';
+
+
+
+export default function UserList() {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [apiData, setApiData] = useState([]);
-    const [open, setOpen] = useState(false);
-    const [id, setId] = useState(0);
-    const [change, setChange] = useState(false);
-
-    const handleClick = (id) => {
-        debugger
-        setId(id);
-        handleOpen();
-    }
-
-    const handleSubmit = () => {
-        debugger
-        deleteCategoryService(id)
-            .then((response) => {
-                if (response.status) {
-                    toast.success("Deleted Sucessfully", {
-                        autoClose: 2000
-                    })
-                    handleOpen()
-                    setChange(!change)
-
-                }
-                else {
-                    toast.error("Error while Deleting", {
-                        autoClose: 2000
-                    })
-                }
-            })
-
-
-    }
-
-    const handleOpen = () => {
-        setOpen(!open);
-    }
-
-    const handleChangePage = (event, newPage) => {
-        setPage(newPage);
-    };
+    const [modalOpen, setModalOpen] = useState(false);
 
     const style = {
         display: 'flex',
@@ -73,21 +37,36 @@ export default function Category() {
         padding: "30px"
     };
 
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+    };
 
     const handleChangeRowsPerPage = (event) => {
         setRowsPerPage(+event.target.value);
         setPage(0);
     };
 
-    //Fetch Category 
+
+    const handleModalOpen = () => {
+        setModalOpen(!modalOpen);
+    }
+    const handleSubmit = (e) => {
+        setModalOpen(!modalOpen)
+        toast.success(e, {
+            autoClose: 5000
+        })
+
+    }
+
+    //Fetch Users 
     useEffect(() => {
         const fetchedData = () => {
-            categoryService().then(({ status, data }) => {
+            UserListSerivce().then(({ status, data }) => {
                 try {
                     if (status) {
                         setApiData(data);
                     }
-                    else{
+                    else {
                         setApiData([]);
                     }
                 }
@@ -96,53 +75,56 @@ export default function Category() {
             })
         }
         fetchedData()
-    }, [change])
+    }, [])
 
     return (<>
         <Toolbar sx={{ flexDirection: `row`, borderRadius: '20px', justifyContent: "space-between", padding: '10px', alignItems: 'flex-start', background: 'white', marginBottom: '10px' }}>
-            <Typography variant='h5' >Category</Typography>
-            <Link to={"/Category/Create"}>
+            <Typography variant='h5' >User's List</Typography>
+            <Link to={"/UserList/Create"}>
                 <Button variant="contained" color="success" sx={{ marginBottom: `20px` }}>
                     Add
                 </Button>
 
             </Link>
         </Toolbar >
-        <Modal open={open}
-            onClose={handleOpen}>
+        <Modal open={modalOpen}
+            onClose={handleModalOpen}>
             <Box sx={style}>
                 <Typography id="modal-modal-title" variant="h5" component="h6" sx={{ marginBottom: "15px" }}>
                     Are you sure ?
                 </Typography>
                 <Grid container direction="row-reverse">
                     <Grid item>
-                        <Button variant="outlined" color="error" onClick={handleOpen}>
+                        <Button variant="outlined" color="error" onClick={handleModalOpen}>
                             Cancel
                         </Button>
                     </Grid>
                     <Grid item sx={{ mr: '5px' }}>
-
-
-                        <Button variant="contained" color="error" onClick={ handleSubmit}>
-                            Delete
+                        <Button variant="contained" color="success" onClick={(e) => { handleSubmit("asd") }} > Update
                         </Button>
-
                     </Grid>
 
 
                 </Grid>
             </Box>
         </Modal>
+
         <Paper sx={{ width: '100%', overflow: 'hidden', borderRadius: '20px' }}>
             <TableContainer sx={{ maxHeight: 440 }}>
                 <Table stickyHeader aria-label="sticky table">
                     <TableHead>
                         <TableRow>
                             <TableCell >
-                                Id
+                                S.N
                             </TableCell>
                             <TableCell>
                                 Name
+                            </TableCell>
+                            <TableCell>
+                                Email
+                            </TableCell>
+                            <TableCell>
+                                Role
                             </TableCell>
 
 
@@ -152,26 +134,23 @@ export default function Category() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {apiData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item) => {
+                        {apiData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item, index) => {
                             return (
                                 <TableRow hover key={item.id}>
                                     <TableCell>
-                                        {(item?.id)}
+                                        {(index + 1)}
                                     </TableCell>
                                     <TableCell>
-                                        {item?.name}
+                                        {item?.firstName} {item?.lastName}
                                     </TableCell>
-
-
                                     <TableCell>
-                                        <Link to={`/Category/Edit/${item?.id}`}>
-                                            <Button sx={{ margin: "4px" }} variant="contained" >
-                                                <BsPencilSquare></BsPencilSquare>
-                                            </Button>
-                                        </Link>
-                                        <Button variant="contained" color="error" onClick={() => handleClick( item?.id)}>
-                                            <FaTrash></FaTrash>
-                                        </Button>
+                                        {item?.email}
+                                    </TableCell>
+                                    <TableCell>
+                                        {item?.role}
+                                    </TableCell>
+                                    <TableCell>
+                                        {item?.role === "Administrator" ? <Switch defaultChecked color='success' disabled ></Switch> : <Switch onChange={handleModalOpen} checked={item?.active}></Switch>}
                                     </TableCell>
                                 </TableRow>
                             )

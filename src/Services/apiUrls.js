@@ -13,52 +13,49 @@ const apiUrls = {
 
 
 
-    faculty: {
-        faculty: {
+    course: {
+        Course: {
             method: "GET",
-            url: "/GetAllFaculty",
+            url: "/GetAllCourse",
         },
-        createFaculty: {
+        createCourse: {
             method: "POST",
-            url: "/CreateFaculty"
+            url: "/CreateCourse"
         },
-        editFaculty: {
+        editCourse: {
             method: "PUT",
-            url: "/EditFaculty"
+            url: "/EditCourse"
         },
-        deleteFaculty: {
+        deleteCourse: {
             method: "DELETE",
-            url: "/DeleteFaculty"
+            url: "/DeleteCourse"
         },
-        facultyById: {
+        courseById: {
             method: "GET",
-            url: "/GetFacultyById"
+            url: "/GetCourseById"
         }
     },
-    issueBook: {
-        issueBook: {
+    transaction: {
+        transaction: {
             method: "GET",
-            url: "/GetAllIssueBook",
+            url: "/GetAlltransaction",
         },
-        createIssueBook: {
+        createtransaction: {
             method: "POST",
-            url: "/CreateIssueBook"
+            url: "/Createtransaction"
         },
-        issueBookById: {
+        transactionById: {
             method: "GET",
-            url: "/GetIssueBookById/"
+            url: "/GetTransactionById/"
         },
-        editIssueBook: {
+        edittransaction: {
             method: "PUT",
-            url: "/EditIssueBook"
+            url: "/EditTransaction"
         },
-        returnIssuedbook: {
-            method: "POST",
-            url: "/ReturnIssuedBook"
-        },
-        deleteIssueBook: {
+      
+        deletetransaction: {
             method: "DELETE",
-            url: "/DeleteIssueBook"
+            url: "/DeleteTransaction"
         }
     },
 

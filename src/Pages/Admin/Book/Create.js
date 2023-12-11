@@ -3,38 +3,39 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import { Button, FormControl, FormGroup, InputLabel, MenuItem, Select, Stack, TextField } from '@mui/material';
-import { SInputField } from '../../Components/styles/Styles';
+import { SInputField } from '../../../Components/styles/Styles';
 import { IoIosArrowRoundBack } from 'react-icons/io'
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
+import { Link, useNavigate } from 'react-router-dom';
+import { useForm, Controller } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { useState, useEffect } from 'react';
-import { editBookService, bookByIdService } from '../../Services/apiServices/book/bookServices';
-import { categoryService } from '../../Services/apiServices/category/categoryServices';
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from 'yup';
+import { bookService, createBookService } from '../../../Services/apiServices/book/bookServices';
 
-export default function EditBook() {
-    const { register, handleSubmit, formState: { errors, isSubmitting }, setValue } = useForm();
-    const navigate = useNavigate();
-    const [apiData, setApiData] = useState([])
+const schema = yup.object({
+    name: yup.string().required("This field is required"),
+    authorName: yup.string().required("This field is required"),
 
-    //Fetch by Id
-    const { id } = useParams();
-    useEffect(() => {
-        let fetchData = async () => {
-            await bookByIdService(id)
-                .then((response) => {
-                    setApiData(response.data);
-                })
+})
+
+
+export default function CreateBook() {
+    const { register, control, handleSubmit, formState: { errors, isSubmitting } } = useForm({
+        resolver: yupResolver(schema),
+        defaultValues: {
+            name: '',   
+            authorName: ''
         }
-        fetchData()
-    }, [])
+    });
 
-    
-     // Category List
-     const [categoryList,setCategoryList] = useState([]);
-     useEffect(() => {
+    const navigate = useNavigate();
+
+    // Category List
+    const [categoryList, setCategoryList] = useState([]);
+    useEffect(() => {
         let categoryData = () => {
-            categoryService().then((response) => {
+            bookService().then((response) => {
                 try {
                     if (response.status === true) {
                         setCategoryList(response.data);
@@ -44,44 +45,17 @@ export default function EditBook() {
             });
         }
         categoryData();
-    }, [apiData])
+    }, [])
 
+    const handleSelectChange = (event)=>{
+        setCategoryList(event.target.value)
+    }
 
-    // to set the incoming value to the respective fields
-    const [initialValue, setInitialValue] = useState({
-        id: 0,
-        name: "",
-        authorName:"",
-        categoryId:"",
-    });
-
-    useEffect(() => {
-        setInitialValue({
-            id: apiData?.id,
-            name: apiData?.name || "",
-            authorName:apiData?.authorName || "",
-            categoryId:apiData?.categoryId || "",
-        });
-    }, [apiData]);
-    useEffect(() => {
-        // Use setValue to set values for each input field
-        setValue("id", initialValue.id)
-        setValue("name", initialValue.name);
-        setValue("authorName", initialValue.authorName);
-        setValue("categoryId", initialValue.categoryId);
-    }, [initialValue]);
-
-
-    const handleBirthDate = (data) => (
-        setValue("birthDate", data)
-
-    )
-
+    //Post Form
     const onSubmit = async (data) => {
         try {
-            debugger;
             if (isSubmitting) return;
-            const response = await editBookService(data);
+            const response = await createBookService(data);
             if (response.status === true) {
                 toast.success(response.message, {
                     autoclose: 1000,
@@ -103,62 +77,56 @@ export default function EditBook() {
         <>
             <CssBaseline />
             <Container maxWidth="xl">
-                <h2>Edit</h2>
+                <h2>Add Book</h2>
                 <Box sx={{ bgcolor: 'white', padding: '10px', marginTop: '15px', borderRadius: '20px' }}>
                     <Box component="form" sx={{ padding: `10px` }} onSubmit={handleSubmit(onSubmit)} >
                         <FormGroup sx={{ display: `flex`, flexDirection: `row` }}>
                             <SInputField>
                                 <FormControl>
                                     <TextField
-                                        required
-                                        label="Book Name"
-                                        {...register('name', { required: true })}
-                                        value={initialValue.name}
-                                        onChange={(e) => setInitialValue({ ...initialValue, name: e.target.value })}
+                                        label="Name"
+                                        {...register('name')}
+                                        error={errors?.name}
+                                        helperText={errors?.name?.message}
                                     />
                                 </FormControl>
                             </SInputField>
-
 
                             <SInputField>
                                 <FormControl>
                                     <TextField
-                                        required
                                         label="Author Name"
                                         {...register('authorName')}
-                                        value={initialValue.authorName}
-                                        onChange={(e) => setInitialValue({ ...initialValue, authorName: e.target.value })}
+                                        error={errors?.authorName}
+                                        helperText={errors?.authorName?.message}
                                     />
                                 </FormControl>
                             </SInputField>
 
-                         
-
-
                             <SInputField>
                                 <FormControl fullWidth>
-                                    <InputLabel id="category">Faculty</InputLabel>
+                                    <InputLabel id="category">Category</InputLabel>
                                     <Select
-                                        required
                                         labelId="category"
                                         id="category-select"
-                                        label="Faculty"
-                                        {...register("categoryId")}
-                                        value={initialValue.categoryId}
-                                        onChange={(e)=>setInitialValue({...initialValue,categoryId:e.target.value})}
+                                        label="Category"
+                                        size='small'
+                                        multiple
+                                        value={categoryList}
+                                        onChange={handleSelectChange}
                                     >
                                         {categoryList.map((item, index) => (
                                             <MenuItem key={index} value={item.id}>
                                                 {item.name}
                                             </MenuItem>
                                         ))}
-
                                     </Select>
+
                                 </FormControl>
                             </SInputField>
 
 
-                            
+
                         </FormGroup>
 
                         <Stack direction="row" spacing={2} sx={{ margin: `20px 20px 20px 5px` }}>

@@ -2,15 +2,15 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import { Button, FormControl, FormGroup, InputLabel, MenuItem, Select, Stack, TextField, Toolbar, Typography } from '@mui/material';
-import { SInputField } from '../../Components/styles/Styles';
+import { SInputField } from '../../../Components/styles/Styles';
 import { IoIosArrowRoundBack } from 'react-icons/io'
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { useEffect, useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { roleService } from '../../Services/apiServices/common/role/roleService';
-import { SignUpService, signUp } from '../../Services/apiServices/auth/signUpService';
+import { roleService } from '../../../Services/apiServices/common/role/roleService';
+import { SignUpService, signUp } from '../../../Services/apiServices/auth/signUpService';
 
 export default function CreateUser() {
     // const schema = yup

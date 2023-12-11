@@ -3,15 +3,15 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import { Button, FormControl, FormGroup, Stack, TextField } from '@mui/material';
-import { SInputField } from '../../Components/styles/Styles';
+import { SInputField } from '../../../Components/styles/Styles';
 import { IoIosArrowRoundBack } from 'react-icons/io'
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { editCategoryService, categoryByIdService } from '../../Services/apiServices/category/categoryServices';
+import { editCourseService, courseByIdService } from '../../../Services/apiServices/course/courseServices';
 import { toast } from 'react-toastify';
 import { useState, useEffect } from 'react';
 
-export default function EditCategory() {
+export default function EditCourse() {
     const { register, handleSubmit, formState: { errors, isSubmitting }, setValue } = useForm();
     const navigate = useNavigate();
     const [apiData, setApiData] = useState([])
@@ -20,7 +20,7 @@ export default function EditCategory() {
     const { id } = useParams();
     useEffect(() => {
         let fetchData = async () => {
-            await categoryByIdService(id)
+            await courseByIdService(id)
                 .then((response) => {
                     setApiData(response.data);
                 })
@@ -52,12 +52,12 @@ export default function EditCategory() {
         try {
             debugger;
             if (isSubmitting) return;
-            const response = await editCategoryService(data);
+            const response = await editCourseService(data);
             if (response.status === true) {
                 toast.success(response.message, {
                     autoclose: 1000,
                 })
-                navigate("/Category")
+                navigate("/Course")
             } else if (response.status === false) {
                 toast.error(response.message, {
                     autoclose: 1000,
@@ -92,7 +92,7 @@ export default function EditCategory() {
                         </FormGroup>
 
                         <Stack direction="row" spacing={2} sx={{ margin: `20px 20px 20px 5px` }}>
-                            <Link to={"/Category"}>
+                            <Link to={"/Course"}>
                                 <Button variant="outlined" color='error' endIcon={<IoIosArrowRoundBack />}>
                                     Back
                                 </Button>

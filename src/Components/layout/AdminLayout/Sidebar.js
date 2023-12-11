@@ -143,7 +143,7 @@ function Sidebar(props) {
                                 })}
                             </List>
                         </Collapse>
-                        <Link to="/IssueBook" style={{
+                        <Link to="/Transaction" style={{
                             color: 'inherit',
                             textDecoration: 'none',
                             width: '100%'
@@ -152,7 +152,7 @@ function Sidebar(props) {
                                 <ListItemIcon sx={{ fontSize: '25px' }}>
                                     <MdBook />
                                 </ListItemIcon>
-                                <ListItemText primary="Issue Book" />
+                                <ListItemText primary="Transaction" />
                             </ListItemButton>
                         </Link>
                     </List>
@@ -207,9 +207,9 @@ function Sidebar(props) {
 const setUpArray = [
 
     {
-        label: "Faculty",
+        label: "Course",
         icon: <AiOutlineUserAdd />,
-        to: "/Faculty",
+        to: "/Course",
     },
     {
         label: "Student",

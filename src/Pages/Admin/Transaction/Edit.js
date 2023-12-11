@@ -3,22 +3,22 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import { Button, FormControl, FormGroup, InputLabel, MenuItem, Select, Stack, TextField, Typography } from '@mui/material';
-import { SInputField } from '../../Components/styles/Styles';
+import { SInputField } from '../../../Components/styles/Styles';
 import { IoIosArrowRoundBack } from 'react-icons/io'
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { createIssueBookService, editIssueBookService, issueBookByIdService } from '../../Services/apiServices/issueBook/issueBookServices';
+import { createTransactionService, editTransactionService, transactionByIdService } from '../../../Services/apiServices/transaction/transactionServices';
 import { toast } from 'react-toastify';
 import { useState, useEffect } from 'react';
-import { bookService } from '../../Services/apiServices/book/bookServices';
-import { studentService } from '../../Services/apiServices/student/studentService';
+import { bookService } from '../../../Services/apiServices/book/bookServices';
+import { studentService } from '../../../Services/apiServices/student/studentService';
 import { DatePicker } from '@mui/x-date-pickers';
 import dayjs from 'dayjs';
 
 
 
 
-export default function EditIssueBook() {
+export default function EditTransaction() {
 
     const navigate = useNavigate();
     const [bookList, setBookList] = useState([]);
@@ -30,7 +30,7 @@ export default function EditIssueBook() {
     const { id } = useParams();
     useEffect(() => {
         let fetchData = async () => {
-            await issueBookByIdService(id)
+            await transactionByIdService(id)
                 .then((response) => {
                     setApiData(response.data);
                 })
@@ -101,12 +101,12 @@ export default function EditIssueBook() {
     const onSubmit = async (data) => {
         try {
             if (isSubmitting) return;
-            const response = await editIssueBookService(data);
+            const response = await editTransactionService(data);
             if (response.status === true) {
                 toast.success(response.message, {
                     autoclose: 1000,
                 })
-                navigate("/IssueBook")
+                navigate("/Transaction")
             } else if (response.status === false) {
                 toast.error(response.message, {
                     autoclose: 1000,
@@ -195,7 +195,7 @@ export default function EditIssueBook() {
                         </FormGroup>
 
                         <Stack direction="row" spacing={2} sx={{ margin: `20px 20px 20px 5px` }}>
-                            <Link to={"/IssueBook"}>
+                            <Link to={"/Transaction"}>
                                 <Button variant="outlined" color='error' endIcon={<IoIosArrowRoundBack />}>
                                     Back
                                 </Button>

@@ -1,26 +1,27 @@
 import { Route, Routes } from "react-router-dom";
-import Home from "./Pages/Home/Home";
-import Faculty from "./Pages/Faculty/Faculty";
-import CreateFaculty from "./Pages/Faculty/Create";
+
 
 import Login from "./Pages/auth/login";
+import SignUp from "./Pages/auth/signUp";
 import { PrivateRoute } from "./util/Utility";
-import Category from "./Pages/Category/Category";
-import CreateCategory from "./Pages/Category/Create";
-import Student from "./Pages/Student/Student";
-import CreateStudent from "./Pages/Student/Create";
-import CreateBook from "./Pages/Book/Create";
-import Book from "./Pages/Book/Book";
-import IssueBook from "./Pages/IssueBook/IssueBook";
-import CreateIssueBook from "./Pages/IssueBook/Create";
-import EditIssueBook from "./Pages/IssueBook/Edit";
-import EditFaculty from "./Pages/Faculty/Edit";
-import EditStudent from "./Pages/Student/Edit";
-import EditBook from "./Pages/Book/Edit";
-import EditCategory from "./Pages/Category/Edit";
-import { SignUp } from "./Pages/auth/signUp";
-import UserList from "./Pages/UserList/UserList";
-import CreateUser from "./Pages/UserList/Create";
+import UserList from "./Pages/Admin/UserList/UserList"
+import CreateUser from "./Pages/Admin/UserList/Create"
+import CourseIndex from "./Pages/Admin/Course/CourseIndex";
+import CreateCourse from "./Pages/Admin/Course/Create";
+import EditCourse from "./Pages/Admin/Course/Edit";
+import StudentIndex from "./Pages/Admin/Student/StudentIndex";
+import CreateStudent from "./Pages/Admin/Student/Create";
+import EditStudent from "./Pages/Admin/Student/Edit";
+import Category from "./Pages/Admin/Category/Category";
+import CreateCategory from "./Pages/Admin/Category/Create";
+import EditCategory from "./Pages/Admin/Category/Edit";
+import Book from "./Pages/Admin/Book/Book";
+import CreateBook from "./Pages/Admin/Book/Create";
+import EditBook from "./Pages/Admin/Book/Edit";
+import CreateTransaction from "./Pages/Admin/Transaction/Create";
+import Transaction from "./Pages/Admin/Transaction/TransactionIndex";
+import EditTransaction from "./Pages/Admin/Transaction/Edit";
+import Home from "./Pages/Admin/Home/Home";
 
 
 export default function Gateway() {
@@ -34,13 +35,13 @@ export default function Gateway() {
                 <Route exact path="/UserList" element={<UserList />} />
                 <Route exact path="/UserList/Create" element={<CreateUser />} />
 
-                {/* Faculty */}
-                <Route exact path="/Faculty" element={<Faculty />} />
-                <Route exact path="/Faculty/Create" element={<CreateFaculty />} />
-                <Route exact path="/Faculty/Edit/:id" element={<EditFaculty />} />
+                {/*  */}
+                <Route exact path="/Course" element={<CourseIndex />} />
+                <Route exact path="/Course/Create" element={<CreateCourse />} />
+                <Route exact path="/Course/Edit/:id" element={<EditCourse />} />
 
                 {/* Student */}
-                <Route exact path="/Student" element={<Student />} />
+                <Route exact path="/Student" element={<StudentIndex />} />
                 <Route exact path="/Student/Create" element={<CreateStudent />} />
                 <Route exact path="/Student/Edit/:id" element={<EditStudent />} />
 
@@ -51,13 +52,13 @@ export default function Gateway() {
 
                 {/* Book */}
                 <Route exact path="/Book" element={<Book />} />
-                <Route exact path="/Book/Create" element={<CreateBook />} />
+                <Route exact path="/Book/Create" element={<CreateBook/>} />
                 <Route exact path="/Book/Edit/:id" element={<EditBook />} />
 
-                {/* IssueBook */}
-                <Route exact path="/IssueBook" element={<IssueBook />} />
-                <Route exact path="/IssueBook/Create" element={<CreateIssueBook />} />
-                <Route exact path="/IssueBook/Edit/:id" element={<EditIssueBook />} />
+                {/* Transaction */}
+                <Route exact path="/Transaction" element={<Transaction />} />
+                <Route exact path="/Transaction/Create" element={<CreateTransaction />} />
+                <Route exact path="/Transaction/Edit/:id" element={<EditTransaction />} />
 
                 <Route exact path="/*" element={<div> Nothing </div>} />
             </Route>

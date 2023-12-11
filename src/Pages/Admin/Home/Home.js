@@ -7,7 +7,7 @@ import { FaHome, FaWrench } from 'react-icons/fa'
 import { GiBlackBook } from "react-icons/gi";
 import { PiStudentLight } from "react-icons/pi";
 import { AiOutlineSmile } from "react-icons/ai";
-import { dashboardService } from "../../Services/apiServices/dashboard/dashboardService";
+import { dashboardService } from "../../../Services/apiServices/dashboard/dashboardService";
 import randomColor from "randomcolor";
 ChartJs.register(
     BarElement, CategoryScale, LinearScale, Tooltip, Legend, PointElement, LineElement, ArcElement
@@ -153,7 +153,7 @@ export default function Home() {
                     <div className="card  bg-red-300 m-2 p-3 rounded-2xl  flex flex-col w-full">
                         <div className="header flex justify-between">
                             <div >
-                                <Typography variant="h4" sx={{ color: 'rgb(108, 115, 127)' }}>Total Issued</Typography>
+                                <Typography variant="h4" sx={{ color: 'rgb(108, 115, 127)' }}>Total Transaction</Typography>
                             </div>
                             <div>
                                 <AiOutlineSmile size={50}></AiOutlineSmile>

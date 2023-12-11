@@ -7,65 +7,45 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import { Box, Button, Checkbox, Grid, Modal, Toolbar, Typography } from '@mui/material';
+import { Box, Button, Grid, Modal, Toolbar, Typography } from '@mui/material';
 import { FaTrash } from 'react-icons/fa'
 import { BsPencilSquare } from 'react-icons/bs'
 import { Link } from 'react-router-dom';
-import { deleteIssueBookService, issueBookService, returnIssuedBookService } from '../../Services/apiServices/issueBook/issueBookServices';
+import { deleteStudentService, studentService } from '../../../Services/apiServices/student/studentService';
 import { toast } from 'react-toastify';
-export default function IssueBook() {
+export default function StudentIndex() {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [apiData, setApiData] = useState([]);
     const [open, setOpen] = useState(false);
-    const [action, setAction] = useState("");
     const [id, setId] = useState(0);
-    const [status, setStatus] = useState(false);
     const [change, setChange] = useState(false);
 
-    const handleClick = (action, id, returnStatus) => {
-        setAction(action);
+    const handleClick = (id) => {
+        debugger
         setId(id);
-        setStatus(!returnStatus);
         handleOpen();
     }
 
-    const handleSubmit = (action) => {
-        if (action === "update") {
-            returnIssuedBookService(id, status)
-                .then((response) => {
-                    if (response.status) {
-                        toast.success("Updated Sucessfully", {
-                            autoClose: 2000
-                        })
-                        handleOpen()
-                        setChange(!change)
-                    }
-                    else {
-                        toast.error("Error while Updating", {
-                            autoClose: 2000
-                        })
-                    }
-                })
-        }
-        else {
-            deleteIssueBookService(id)
-                .then((response) => {
-                    if (response.status) {
-                        toast.success("Deleted Sucessfully", {
-                            autoClose: 2000
-                        })
-                        handleOpen()
-                        setChange(!change)
+    const handleSubmit = () => {
+        debugger
+        deleteStudentService(id)
+            .then((response) => {
+                if (response.status) {
+                    toast.success("Deleted Sucessfully", {
+                        autoClose: 2000
+                    })
+                    handleOpen()
+                    setChange(!change)
 
-                    }
-                    else {
-                        toast.error("Error while Deleting", {
-                            autoClose: 2000
-                        })
-                    }
-                })
-        }
+                }
+                else {
+                    toast.error("Error while Deleting", {
+                        autoClose: 2000
+                    })
+                }
+            })
+
 
     }
 
@@ -99,21 +79,19 @@ export default function IssueBook() {
         setPage(0);
     };
 
-    //Fetch IssueBookList 
+    //Fetch Student 
     useEffect(() => {
-        debugger
         const fetchedData = () => {
-            issueBookService().then(({ status, data }) => {
+            studentService().then(({ status, data }) => {
                 try {
                     if (status) {
                         setApiData(data);
                     }
-                    else {
+                    else{
                         setApiData([]);
                     }
                 }
                 catch (error) {
-                    alert("asd")
                 }
             })
         }
@@ -122,8 +100,8 @@ export default function IssueBook() {
 
     return (<>
         <Toolbar sx={{ flexDirection: `row`, borderRadius: '20px', justifyContent: "space-between", padding: '10px', alignItems: 'flex-start', background: 'white', marginBottom: '10px' }}>
-            <Typography variant='h5' >Issue Book</Typography>
-            <Link to={"/IssueBook/Create"}>
+            <Typography variant='h5' >Student</Typography>
+            <Link to={"/Student/Create"}>
                 <Button variant="contained" color="success" sx={{ marginBottom: `20px` }}>
                     Add
                 </Button>
@@ -145,11 +123,9 @@ export default function IssueBook() {
                     <Grid item sx={{ mr: '5px' }}>
 
 
-                        {action === "update" ?
-                            <Button variant="contained" color="success" onClick={() => handleSubmit("update")} > Update
-                            </Button> : <Button variant="contained" color="error" onClick={() => handleSubmit("delete")}>
-                                Delete
-                            </Button>}
+                        <Button variant="contained" color="error" onClick={ handleSubmit}>
+                            Delete
+                        </Button>
 
                     </Grid>
 
@@ -168,9 +144,7 @@ export default function IssueBook() {
                             <TableCell>
                                 Name
                             </TableCell>
-                            <TableCell>
-                                Return Status
-                            </TableCell>
+
 
                             <TableCell>
                                 Action
@@ -185,22 +159,17 @@ export default function IssueBook() {
                                         {(item?.id)}
                                     </TableCell>
                                     <TableCell>
-                                        {item?.studentFullName}
-                                    </TableCell>
-                                    <TableCell>
-                                        <Checkbox
-                                            checked={item?.returnStatus}
-                                            onClick={() => handleClick("update", item?.id, item?.returnStatus)}
-                                        />
+                                        {item?.firstName} {item?.lastName}
                                     </TableCell>
 
+
                                     <TableCell>
-                                        <Link to={`/IssueBook/Edit/${item?.id}`}>
+                                        <Link to={`/Student/Edit/${item?.id}`}>
                                             <Button sx={{ margin: "4px" }} variant="contained" >
                                                 <BsPencilSquare></BsPencilSquare>
                                             </Button>
                                         </Link>
-                                        <Button variant="contained" color="error" onClick={() => handleClick("delete", item?.id)}>
+                                        <Button variant="contained" color="error" onClick={() => handleClick( item?.id)}>
                                             <FaTrash></FaTrash>
                                         </Button>
                                     </TableCell>

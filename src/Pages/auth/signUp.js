@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-export function SignUp() {
+export default function SignUp() {
     const schema = yup.object().shape({
         firstName:yup.string().required("This field is required"),
         email:yup.string().email("Invalid Format").required("This field is required"),
