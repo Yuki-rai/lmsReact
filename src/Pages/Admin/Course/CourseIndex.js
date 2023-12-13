@@ -101,7 +101,7 @@ export default function CourseIndex() {
     return (<>
         <Toolbar sx={{ flexDirection: `row`, borderRadius: '20px', justifyContent: "space-between", padding: '10px', alignItems: 'flex-start', background: 'white', marginBottom: '10px' }}>
             <Typography variant='h5' >Course</Typography>
-            <Link to={"/Course/Create"}>
+            <Link to={"/Admin/Course/Create"}>
                 <Button variant="contained" color="success" sx={{ marginBottom: `20px` }}>
                     Add
                 </Button>
@@ -170,7 +170,7 @@ export default function CourseIndex() {
 
 
                                     <TableCell>
-                                        <Link to={`/Course/Edit/${item?.id}`}>
+                                        <Link to={`/Admin/Course/Edit/${item?.id}`}>
                                             <Button sx={{ margin: "4px" }} variant="contained" >
                                                 <BsPencilSquare title='Edit'></BsPencilSquare>
                                             </Button>

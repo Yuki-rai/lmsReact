@@ -65,7 +65,7 @@ export default function CreateCategory() {
                         </FormGroup>
 
                         <Stack direction="row" spacing={2} sx={{ margin: `20px 20px 20px 5px` }}>
-                            <Link to={"/Category"}>
+                            <Link to={"/Admin/Category"}>
                                 <Button variant="outlined" color='error' endIcon={<IoIosArrowRoundBack />}>
                                     Back
                                 </Button>

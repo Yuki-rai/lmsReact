@@ -101,7 +101,7 @@ export default function Category() {
     return (<>
         <Toolbar sx={{ flexDirection: `row`, borderRadius: '20px', justifyContent: "space-between", padding: '10px', alignItems: 'flex-start', background: 'white', marginBottom: '10px' }}>
             <Typography variant='h5' >Category</Typography>
-            <Link to={"/Category/Create"}>
+            <Link to={"/Admin/Category/Create"}>
                 <Button variant="contained" color="success" sx={{ marginBottom: `20px` }}>
                     Add
                 </Button>
@@ -164,7 +164,7 @@ export default function Category() {
 
 
                                     <TableCell>
-                                        <Link to={`/Category/Edit/${item?.id}`}>
+                                        <Link to={`/Admin/Category/Edit/${item?.id}`}>
                                             <Button sx={{ margin: "4px" }} variant="contained" >
                                                 <BsPencilSquare></BsPencilSquare>
                                             </Button>

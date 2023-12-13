@@ -4,7 +4,6 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Drawer from '@mui/material/Drawer';
-import AppBar from '@mui/material/AppBar';
 import List from '@mui/material/List';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -143,7 +142,7 @@ function Sidebar(props) {
                                 })}
                             </List>
                         </Collapse>
-                        <Link to="/Transaction" style={{
+                        <Link to="/Admin/Transaction" style={{
                             color: 'inherit',
                             textDecoration: 'none',
                             width: '100%'
@@ -209,24 +208,24 @@ const setUpArray = [
     {
         label: "Course",
         icon: <AiOutlineUserAdd />,
-        to: "/Course",
+        to: "/Admin/Course",
     },
     {
         label: "Student",
         icon: <PiStudentFill />,
-        to: "/Student",
+        to: "/Admin/Student",
     },
     {
         label: "Book",
         icon: <GiBookCover />,
-        to: "/Book",
+        to: "/Admin/Book",
 
 
     },
     {
         label: "Category",
         icon: <MdBook />,
-        to: "/Category",
+        to: "/Admin/Category",
 
     }
 ]
@@ -235,7 +234,7 @@ const mainSetUpArray = [
     {
         label:"User",
         icon: <AiOutlineUserAdd />,
-        to:"/UserList"
+        to:"/Admin/UserList"
     }
 ]
 
