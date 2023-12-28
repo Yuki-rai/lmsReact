@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import { Button, FormControl, FormGroup, InputLabel, MenuItem, Select, Stack, TextField } from '@mui/material';
+import { Button, FormControl, FormGroup, InputLabel, MenuItem, Select, Stack, TextField, Toolbar, Typography } from '@mui/material';
 import { SInputField } from '../../../Components/styles/Styles';
 import { IoIosArrowRoundBack } from 'react-icons/io'
 import { Link, useNavigate } from 'react-router-dom';
@@ -12,15 +12,21 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useEffect, useState } from 'react';
 import { courseService } from '../../../Services/apiServices/course/courseServices';
 import { genderService } from '../../../Services/apiServices/common/gender/genderService';
+import * as yup from 'yup'
+
+const schema = yup.object().shape({
+
+})
+
 export default function CreateStudent() {
     const { register, handleSubmit, formState: { errors, isSubmitting }, setValue } = useForm({
-        defaultValues:{
-            firstName:'',
-            lastName:'',
-            birthDate:'',
-            facultyId:0,
-            genderId:0
-            
+        defaultValues: {
+            firstName: '',
+            lastName: '',
+            birthDate: '',
+            facultyId: 0,
+            genderId: 0
+
         }
     });
 
@@ -32,14 +38,14 @@ export default function CreateStudent() {
         genderId: ''
     })
 
-    const handleChange=(e)=>{
-        const {name,value}= e.target;
+    const handleChange = (e) => {
+        const { name, value } = e.target;
         setInitialValue({
             ...initialValue,
-            [name]:value
+            [name]: value
         })
-        
-        
+
+
     }
     const navigate = useNavigate();
     const [facultyList, setFacultyList] = useState([]);
@@ -98,7 +104,10 @@ export default function CreateStudent() {
     return (
         <>
             <Container maxWidth="xl">
-                <h2>Add Student</h2>
+                <Toolbar sx={{ flexDirection: `row`, borderRadius: '20px', justifyContent: "space-between", padding: '10px', alignItems: 'flex-start', background: 'white', marginBottom: '10px' }}>
+                    <Typography variant='h6' className='a bg-blue-500 p-2 rounded text-white' > + Add Student</Typography>
+
+                </Toolbar >
                 <Box sx={{ bgcolor: 'white', padding: '10px', marginTop: '15px', borderRadius: '20px' }}>
                     <Box component="form" sx={{ padding: `10px` }} onSubmit={handleSubmit(onSubmit)} >
                         <FormGroup sx={{ display: `flex`, flexDirection: `row` }}>

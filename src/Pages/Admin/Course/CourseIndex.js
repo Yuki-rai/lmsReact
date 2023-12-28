@@ -32,7 +32,7 @@ export default function CourseIndex() {
         deleteCourseService(id)
             .then((response) => {
                 if (response.status) {
-                    toast.success("Deleted Sucessfully", {
+                    toast.error("Deleted Sucessfully", {
                         autoClose: 2000
                     })
                     handleOpen()
@@ -57,7 +57,7 @@ export default function CourseIndex() {
         setPage(newPage);
     };
 
-    const style = {
+    const ModalBoxStyle = {
         display: 'flex',
         flexDirection: 'column',
         position: 'absolute',
@@ -110,7 +110,7 @@ export default function CourseIndex() {
         </Toolbar >
         <Modal open={open}
             onClose={handleOpen}>
-            <Box sx={style}>
+            <Box sx={ModalBoxStyle}>
                 <Typography id="modal-modal-title" variant="h5" component="h6" sx={{ marginBottom: "15px" }}>
                     Are you sure ?
                 </Typography>

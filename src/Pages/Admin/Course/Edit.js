@@ -1,9 +1,8 @@
 import * as React from 'react';
-import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import { Button, FormControl, FormGroup, Stack, TextField, Toolbar, Typography } from '@mui/material';
-import { SInputField } from '../../../Components/styles/Styles';
+import { Button, FormControl, FormGroup, FormLabel, Stack, TextField, Toolbar, Typography } from '@mui/material';
+import { SInputField, TextArea } from '../../../Components/styles/Styles';
 import { IoIosArrowRoundBack } from 'react-icons/io'
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
@@ -22,7 +21,7 @@ const schema = yup.object().shape({
 })
 
 export default function EditCourse() {
-    const { register, handleSubmit, formState: { errors, isSubmitting },setValue } = useForm({
+    const { register, handleSubmit, formState: { errors, isSubmitting }, setValue } = useForm({
         resolver: yupResolver(schema)
     });
     const navigate = useNavigate();
@@ -32,7 +31,7 @@ export default function EditCourse() {
     const { id } = useParams();
     useEffect(() => {
         let fetchData = async () => {
-            await courseByIdService(id)
+            courseByIdService(id)
                 .then((response) => {
                     setApiData(response.data);
                 })
@@ -44,19 +43,28 @@ export default function EditCourse() {
     // to set the incoming value to the respective fields
     const [initialValue, setInitialValue] = useState({
         id: 0,
-        name: "",
+        courseName: "",
+        semester: 0,
+        description: "",
+        credits: ""
     });
 
     useEffect(() => {
         setInitialValue({
             id: apiData?.id,
-            name: apiData?.name || "",
+            courseName: apiData?.courseName || "",
+            semester: apiData?.semester || 0,
+            description: apiData?.description || "",
+            credits: apiData?.credits || "",
         });
     }, [apiData]);
     useEffect(() => {
         // Use setValue to set values for each input field
         setValue("id", initialValue.id)
-        setValue("name", initialValue.name);
+        setValue("courseName", initialValue.courseName);
+        setValue("semester", initialValue.semester);
+        setValue("credits", initialValue.credits);
+        setValue("description", initialValue.description);
     }, [initialValue]);
 
 
@@ -82,10 +90,13 @@ export default function EditCourse() {
         }
 
     }
+
+
     return (
         <>
+
             <Container maxWidth="xl">
-            <Toolbar sx={{ flexDirection: `row`, borderRadius: '20px', justifyContent: "space-between", padding: '10px', alignItems: 'flex-start', background: 'white', marginBottom: '10px' }}>
+                <Toolbar sx={{ flexDirection: `row`, borderRadius: '20px', justifyContent: "space-between", padding: '10px', alignItems: 'flex-start', background: 'white', marginBottom: '10px' }}>
                     <Typography variant='h5' >Edit Course</Typography>
 
                 </Toolbar >
@@ -99,22 +110,56 @@ export default function EditCourse() {
                                         {...register('courseName')}
                                         error={errors?.courseName}
                                         helperText={errors?.courseName?.message}
+                                        value={initialValue.courseName}
+                                        onChange={(e) => setInitialValue({ ...initialValue, courseName: e.target.value })}
+                                    />
+
+                                </FormControl>
+                            </SInputField>
+                            <SInputField>
+                                <FormControl>
+                                    <TextField
+                                        label="Semester"
+                                        type='number'
+                                        {...register('semester')}
+                                        value={initialValue.semester}
+                                        onChange={(e) => setInitialValue({ ...initialValue, semester: e.target.value })}
+                                        error={errors?.semester}
+                                        helperText={errors?.semester?.message}
+                                    />
+
+                                </FormControl>
+                            </SInputField>
+                            <SInputField>
+                                <FormControl>
+                                    <TextField
+                                        label="Credits"
+                                        {...register('credits')}
+                                        value={initialValue.credits}
+                                        onChange={(e) => setInitialValue({ ...initialValue, credits: e.target.value })}
+                                        error={errors?.credits}
+                                        helperText={errors?.credits?.message}
                                     />
 
                                 </FormControl>
                             </SInputField>
 
-
-
-                            <SInputField>
+                        </FormGroup>
+                        <FormGroup>
+                            <SInputField >
                                 <FormControl>
-                                    <TextField
-                                        
-                                        label="Name"
-                                        {...register('name', { required: true })}
-                                        value={initialValue.name}
-                                        onChange={(e) => setInitialValue({ ...initialValue, name: e.target.value })}
+                                    <FormLabel className='m-1'>Description</FormLabel>
+                                    <TextArea
+                                        rows={4}
+                                        cols={50}
+                                        label="Description"
+                                        {...register('description')}
+                                        value={initialValue.description}
+                                        onChange={(e) => setInitialValue({ ...initialValue, description: e.target.value })}
+                                        error={errors?.description}
+                                        helperText={errors?.description?.message}
                                     />
+
                                 </FormControl>
                             </SInputField>
                         </FormGroup>

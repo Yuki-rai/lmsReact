@@ -101,9 +101,9 @@ export default function StudentIndex() {
     return (<>
         <Toolbar sx={{ flexDirection: `row`, borderRadius: '20px', justifyContent: "space-between", padding: '10px', alignItems: 'flex-start', background: 'white', marginBottom: '10px' }}>
             <Typography variant='h5' >Student</Typography>
-            <Link to={"/Student/Create"}>
+            <Link to={"/Admin/Student/Create"}>
                 <Button variant="contained" color="success" sx={{ marginBottom: `20px` }}>
-                    Add
+                     + Add
                 </Button>
 
             </Link>

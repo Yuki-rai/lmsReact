@@ -1,8 +1,8 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import { Button, FormControl, FormGroup, FormHelperText, Stack, TextField, Toolbar, Typography } from '@mui/material';
-import { SInputField } from '../../../Components/styles/Styles';
+import { Button, FormControl, FormGroup, FormHelperText, FormLabel, Stack, TextField, Toolbar, Typography } from '@mui/material';
+import { SInputField, TextArea } from '../../../Components/styles/Styles';
 import { IoIosArrowRoundBack } from 'react-icons/io'
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
@@ -93,9 +93,15 @@ export default function CreateCourse() {
 
                                 </FormControl>
                             </SInputField>
-                            <SInputField>
+                          
+                        </FormGroup>
+                        <FormGroup>
+                            <SInputField >
                                 <FormControl>
-                                    <TextField
+                                    <FormLabel className='m-1'>Description</FormLabel>
+                                    <TextArea
+                                        rows={4}
+                                        cols={50}
                                         label="Description"
                                         {...register('description')}
                                         error={errors?.description}

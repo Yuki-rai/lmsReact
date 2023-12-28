@@ -49,7 +49,9 @@ export default function EditStudent() {
     useEffect(()=>{
         let genderData =()=>{
             genderService().then((response)=>{
-                setGenderList(response.data)
+                if(response.status){
+                    setGenderList(response.data)
+                }
             })
         }
         genderData()
