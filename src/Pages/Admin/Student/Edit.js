@@ -2,7 +2,7 @@ import * as React from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import { Button, FormControl, FormGroup, InputLabel, MenuItem, Select, Stack, TextField } from '@mui/material';
+import { Button, FormControl, FormGroup, InputLabel, MenuItem, Select, Stack, TextField, Toolbar, Typography } from '@mui/material';
 import { SInputField } from '../../../Components/styles/Styles';
 import { IoIosArrowRoundBack } from 'react-icons/io'
 import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -119,7 +119,10 @@ export default function EditStudent() {
         <>
             <CssBaseline />
             <Container maxWidth="xl">
-                <h2>Edit</h2>
+            <Toolbar sx={{ flexDirection: `row`, borderRadius: '20px', justifyContent: "space-between", padding: '10px', alignItems: 'flex-start', background: 'white', marginBottom: '10px' }}>
+                    <Typography variant='h6'  > Update</Typography>
+
+                </Toolbar >
                 <Box sx={{ bgcolor: 'white', padding: '10px', marginTop: '15px', borderRadius: '20px' }}>
                     <Box component="form" sx={{ padding: `10px` }} onSubmit={handleSubmit(onSubmit)} >
                         <FormGroup sx={{ display: `flex`, flexDirection: `row` }}>
@@ -203,7 +206,7 @@ export default function EditStudent() {
                         </FormGroup>
 
                         <Stack direction="row" spacing={2} sx={{ margin: `20px 20px 20px 5px` }}>
-                            <Link to={"/Student"}>
+                            <Link to={"/Admin/Student"}>
                                 <Button variant="outlined" color='error' endIcon={<IoIosArrowRoundBack />}>
                                     Back
                                 </Button>

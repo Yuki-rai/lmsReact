@@ -13,10 +13,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 
 const schema = yup.object().shape({
-    courseName: yup.string().required("This field is required !"),
+    courseName: yup.string("Cannot contain Number").required("This field is required !"),
     semester: yup.number().min(2, "Value should be greater or equal to 2").required("This field is required !").typeError('A number is required'),
     credits: yup.string().required("This field is required !"),
-    description: yup.string().required("This field is required !")
 
 })
 
@@ -53,7 +52,7 @@ export default function CreateCourse() {
 
             <Container maxWidth="xl">
                 <Toolbar sx={{ flexDirection: `row`, borderRadius: '20px', justifyContent: "space-between", padding: '10px', alignItems: 'flex-start', background: 'white', marginBottom: '10px' }}>
-                    <Typography variant='h5' >Add Course</Typography>
+                    <Typography variant='h5' > + Add Course</Typography>
 
                 </Toolbar >
                 <Box sx={{ bgcolor: 'white', padding: '10px', marginTop: '15px', borderRadius: '20px' }}>

@@ -21,6 +21,7 @@ export default function StudentIndex() {
     const [id, setId] = useState(0);
     const [change, setChange] = useState(false);
 
+    
     const handleClick = (id) => {
         debugger
         setId(id);
@@ -164,7 +165,7 @@ export default function StudentIndex() {
 
 
                                     <TableCell>
-                                        <Link to={`/Student/Edit/${item?.id}`}>
+                                        <Link to={`/Admin/Student/Edit/${item?.id}`}>
                                             <Button sx={{ margin: "4px" }} variant="contained" >
                                                 <BsPencilSquare></BsPencilSquare>
                                             </Button>
