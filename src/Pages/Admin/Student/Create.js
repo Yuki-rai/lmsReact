@@ -18,7 +18,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 const schema = yup.object().shape({
     firstName: yup.string().required("Name is required !"),
     courseId: yup.number().min(1, "Please select course !").required("This Field is required !").typeError("Please select course !"),
-    birthDate:
 })
 
 export default function CreateStudent() {
